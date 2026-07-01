@@ -116,21 +116,19 @@ O cliente pode:
 CrochetCommerce
 │
 ├── API (Backend)
-│   ├── Usuários
-│   ├── Produtos
-│   ├── Categorias
-│   ├── Pedidos
-│   ├── Wishlist
-│   └── Autenticação
+│   ├── Users
+│   ├── Products
+│   ├── ProductCategories
+│   ├── Orders
+│   ├── FAQs
+│   └──FAQCategories
 │
-└── Aplicativo Android
-    ├── Login
-    ├── Cadastro
+└── views (Frontend)
+    ├── Account
+    ├── Dashboard
     ├── Home
-    ├── Perfil
-    ├── Wishlist
-    ├── Meus Pedidos
-    └── Produtos
+    ├── Login
+    └── Register
 ```
 
 ---
