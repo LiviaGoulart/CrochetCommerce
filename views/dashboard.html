@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="assets/admin/styles/dashboard.css">
+
+    <title>Dashboard</title>
+
+</head>
+<body>
+
+<header>
+
+    <section class="logo-area">
+
+        <button class="logo-button">
+            ✂
+        </button>
+
+        <section>
+
+            <h1>CrochetCommerce</h1>
+
+            <p>Painel de Vendas</p>
+
+        </section>
+
+    </section>
+
+    <section class="profile-area">
+
+        <button class="notification-button">
+            🔔
+        </button>
+
+        <section class="profile-info">
+
+            <h2 id="user-name">Maria Silva</h2>
+
+            <p>Crocheteira</p>
+
+        </section>
+
+        <button class="profile-button">
+            👤
+        </button>
+
+    </section>
+
+</header>
+
+<main>
+
+    <aside>
+
+        <button class="new-product-button">
+            + Novo Produto
+        </button>
+
+        <nav>
+
+            <button class="menu-button">
+                ◫
+                Dashboard
+            </button>
+
+            <button class="menu-button active-menu">
+                ◈
+                Meus Produtos
+            </button>
+
+            <button class="menu-button">
+                ⌲
+                Pedidos
+            </button>
+
+            <button class="menu-button">
+                📊
+                Análises
+            </button>
+
+            <button class="menu-button">
+                ⚙
+                Configurações
+            </button>
+
+        </nav>
+
+    </aside>
+
+    <section class="dashboard-content">
+
+        <section class="cards-area">
+
+            <article class="dashboard-card">
+
+                <section class="card-header">
+
+                    <button>
+                        $
+                    </button>
+
+                    <span class="green-text">
+                        +12.5%
+                    </span>
+
+                </section>
+
+                <h2>R$ 12.450,00</h2>
+
+                <p>Receita Total</p>
+
+            </article>
+
+            <article class="dashboard-card">
+
+                <section class="card-header">
+
+                    <button>
+                        ⌲
+                    </button>
+
+                    <span class="green-text">
+                        +8.2%
+                    </span>
+
+                </section>
+
+                <h2>152</h2>
+
+                <p>Vendas Este Mês</p>
+
+            </article>
+
+            <article class="dashboard-card">
+
+                <section class="card-header">
+
+                    <button>
+                        ◈
+                    </button>
+
+                    <span>
+                        4 novos
+                    </span>
+
+                </section>
+
+                <h2>24</h2>
+
+                <p>Produtos Ativos</p>
+
+            </article>
+
+            <article class="dashboard-card">
+
+                <section class="card-header">
+
+                    <button>
+                        ↗
+                    </button>
+
+                    <span class="green-text">
+                        +1.2%
+                    </span>
+
+                </section>
+
+                <h2>3.8%</h2>
+
+                <p>Taxa de Conversão</p>
+
+            </article>
+
+        </section>
+
+        <section class="products-section">
+
+            <section class="products-header">
+
+                <h2>Meus Produtos</h2>
+
+                <p>Gerencie seus produtos de crochê</p>
+
+            </section>
+
+            <section class="products-filters">
+
+                <input 
+                    type="text"
+                    placeholder="Buscar produtos..."
+                    id="search-product"
+                >
+
+                <select id="status-filter">
+
+                    <option>Todos os status</option>
+
+                    <option>Ativo</option>
+
+                    <option>Inativo</option>
+
+                </select>
+
+                <select id="category-filter">
+
+                    <option>Todas categorias</option>
+
+                    <option>Amigurumi</option>
+
+                    <option>Bolsas</option>
+
+                </select>
+
+            </section>
+
+            <section class="products-list">
+
+                <article class="product-item">
+
+                    <img 
+                        src="https://images.unsplash.com/photo-1583512603806-077998240c7a?q=80&w=1200&auto=format&fit=crop"
+                        alt="Produto"
+                    >
+
+                    <section class="product-info">
+
+                        <h3>Amigurumi Urso Ted</h3>
+
+                        <p class="price-text">
+                            Preço
+                        </p>
+
+                        <span>
+                            R$ 89.90
+                        </span>
+
+                    </section>
+
+                    <section class="product-stock">
+
+                        <p>Estoque</p>
+
+                        <span>15 unidades</span>
+
+                    </section>
+
+                    <section class="product-sales">
+
+                        <p>Vendas</p>
+
+                        <span>47</span>
+
+                    </section>
+
+                    <section class="product-status">
+
+                        <p>Status</p>
+
+                        <button>
+                            Ativo
+                        </button>
+
+                    </section>
+
+                    <button class="options-button">
+                        ⋮
+                    </button>
+
+                </article>
+
+            </section>
+
+        </section>
+
+    </section>
+
+</main>
+
+<script src="assets/admin/scripts/dashboard.js"></script>
+
+</body>
+</html>

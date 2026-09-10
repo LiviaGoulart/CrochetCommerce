@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/public/styles/home.css">
+    <title>Home</title>
+</head>
+<body>
+
+<header>
+    <section class="logo-area">
+        <button class="logo-button">✂</button>
+        <h1>CrochetCommerce</h1>
+    </section>
+
+    <section class="search-area">
+        <input 
+            type="text" 
+            placeholder="Buscar produtos de crochê..."
+            id="search-input"
+        >
+    </section>
+
+    <nav>
+        <button class="icon-button">
+            ♡
+            <span class="notification">3</span>
+        </button>
+        <button class="icon-button">
+            🛒
+            <span class="notification">2</span>
+        </button>
+        <button class="icon-button" id="profileIcon">👤</button>
+    </nav>
+</header>
+
+<main>
+    <aside class="filters">
+        <h2>Filtros</h2>
+
+        <section class="filter-group">
+            <h3>Categorias</h3>
+            <label><input type="checkbox"> Amigurumi</label>
+            <label><input type="checkbox"> Roupas</label>
+            <label><input type="checkbox"> Acessórios</label>
+            <label><input type="checkbox"> Decoração</label>
+            <label><input type="checkbox"> Bebê</label>
+            <label><input type="checkbox"> Pet</label>
+        </section>
+
+        <section class="filter-group">
+            <h3>Preço</h3>
+            <label><input type="radio" name="price"> Até R$ 50</label>
+            <label><input type="radio" name="price"> R$ 50 - R$ 100</label>
+            <label><input type="radio" name="price"> R$ 100 - R$ 200</label>
+            <label><input type="radio" name="price"> Acima de R$ 200</label>
+        </section>
+
+        <button class="limparFiltros">Limpar Filtros</button>
+    </aside>
+
+    <section class="products-section">
+        <section class="products-header">
+            <section>
+                <h2>Produtos em Destaque</h2>
+                <p>3 produtos encontrados</p>
+            </section>
+
+            <select id="sort-products">
+                <option>Mais Relevantes</option>
+                <option>Menor Preço</option>
+                <option>Maior Preço</option>
+            </select>
+        </section>
+
+        <section class="products-grid">
+            <article class="product-card">
+                <img src="https://anamariacraft.com.br/wp-content/uploads/2024/12/294.jpg" alt="Amigurumi Urso Ted">
+                <button class="favorite-button">♡</button>
+                <section class="product-info">
+                    <h3>Amigurumi Urso Ted</h3>
+                    <p>R$ 89,90</p>
+                </section>
+            </article>
+
+            <article class="product-card">
+                <img src="https://cdn.awsli.com.br/2500x2500/1700/1700110/produto/144382631/949ded3354.jpg" alt="Bolsa de Crochê Verão">
+                <button class="favorite-button">♡</button>
+                <section class="product-info">
+                    <h3>Bolsa de Crochê Verão</h3>
+                    <p>R$ 120,00</p>
+                </section>
+            </article>
+
+            <article class="product-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv1hbacFFhCCDwn876msjlQvGu90IMlO8ftA&s" alt="Manta Bebê Pastel"> 
+                <button class="favorite-button">♡</button> 
+                <section class="product-info"> 
+                    <h3>Manta Bebê Pastel</h3> 
+                    <p>R$ 140,00</p> 
+                </section> 
+            </article> 
+        </section> 
+
+        <section class="faq-section">
+            <h2>Perguntas Frequentes</h2>
+
+            <!-- perguntas e respostas dinamicas-->
+        </section>
+
+    </section> 
+</main> 
+
+<script src="assets/public/scripts/home.js"></script> 
+</body> 
+</html>

@@ -1,174 +1,93 @@
-# 🧶 CrochetCommerce
+# 📁 ACME - Projeto Didático MVC
 
-## Sobre o projeto
-
-O **CrochetCommerce** é um **SaaS (Software as a Service)** desenvolvido para conectar **crocheteiras** e **clientes** em uma única plataforma, proporcionando um ambiente seguro, organizado e intuitivo para a comercialização de peças artesanais em crochê.
-
-A plataforma possui dois tipos de usuários:
-
-- 👩‍🧶 **Crocheteiras (Vendedoras):** podem cadastrar, gerenciar e vender seus produtos.
-- 🛍️ **Clientes:** podem navegar pelo catálogo, favoritar produtos, realizar compras e acompanhar seus pedidos.
-
-O objetivo do CrochetCommerce é valorizar o artesanato, facilitar a divulgação dos trabalhos das crocheteiras e oferecer aos clientes uma experiência de compra confiável.
+## Programação Web II — Técnico em Informática
 
 ---
 
-# 🚀 Objetivos
+### 🎯 Objetivo do Projeto
 
-- Incentivar o comércio de produtos artesanais.
-- Facilitar a venda de peças de crochê.
-- Centralizar vendedores e compradores em uma única plataforma.
-- Oferecer uma experiência simples e segura para ambas as partes.
+Este projeto tem como objetivo ensinar o padrão de arquitetura **MVC (Model-View-Controller)** utilizando
+**PHP** no back-end e **HTML, CSS e JavaScript** no front-end.
 
 ---
 
-# 💡 Importância do projeto
+### 🧱 O que é MVC?
 
-Atualmente, muitas crocheteiras realizam suas vendas por redes sociais e aplicativos de mensagens, o que pode gerar dificuldades no controle de pedidos, pagamentos e organização dos produtos.
+O **MVC** é um padrão de arquitetura de software que separa a aplicação em três camadas principais:
 
-O **CrochetCommerce** surge como uma solução para esses problemas, oferecendo uma plataforma especializada no segmento de artesanato em crochê.
-
-Entre os principais benefícios estão:
-
-- Maior organização das vendas;
-- Catálogo centralizado de produtos;
-- Facilidade para encontrar peças artesanais;
-- Segurança para compradores e vendedores;
-- Controle de pedidos;
-- Gerenciamento de produtos;
-- Ambiente dedicado exclusivamente ao mercado de crochê.
-
-Dessa forma, o sistema fortalece pequenos empreendedores e torna a experiência de compra muito mais prática e confiável.
-
----
-
-# 👥 Tipos de usuários
-
-## 🧶 Crocheteira
-
-A crocheteira possui acesso ao gerenciamento de sua loja, podendo:
-
-- Cadastrar produtos;
-- Editar produtos;
-- Excluir produtos;
-- Gerenciar pedidos;
-- Atualizar informações da conta;
-- Acompanhar vendas.
-
----
-
-## 🛒 Cliente
-
-O cliente pode:
-
-- Criar uma conta;
-- Fazer login;
-- Visualizar produtos;
-- Favoritar produtos;
-- Adicionar itens ao carrinho;
-- Realizar pedidos;
-- Acompanhar compras;
-- Atualizar seus dados pessoais.
-
----
-
-# ✨ Funcionalidades
-
-- Cadastro de usuários
-- Autenticação com login
-- Dois níveis de usuários (Cliente e Crocheteira)
-- Cadastro de categorias
-- Cadastro de produtos
-- Atualização de produtos
-- Exclusão lógica de produtos
-- Carrinho de compras
-- Lista de desejos (Wishlist)
-- Gerenciamento de pedidos
-- Perfil do usuário
-- API REST
-- Autenticação via JWT
-
----
-
-# 🛠️ Tecnologias utilizadas
-
-## Backend
-
-- PHP 8
-- MySQL
-- API REST
-- JWT (JSON Web Token)
-- Composer
-
-## Frontend
-
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- Consumo da API REST
-- Design responsivo
-
----
-
-# 📂 Estrutura do sistema
+| Camada         | Responsabilidade                                                                 |
+|----------------|----------------------------------------------------------------------------------|
+| **Model**      | Representa os dados e as regras de negócio. Faz a comunicação com o banco de dados. |
+| **View**       | É a interface do usuário. Tudo que o usuário vê (HTML, CSS, JS).                 |
+| **Controller** | Recebe as requisições, processa a lógica e decide qual resposta enviar.          |
 
 ```
-CrochetCommerce
-│
-├── API (Backend)
-│   ├── Users
-│   ├── Products
-│   ├── ProductCategories
-│   ├── Orders
-│   ├── FAQs
-│   └──FAQCategories
-│
-└── views (Frontend)
-    ├── Account
-    ├── Dashboard
-    ├── Home
-    ├── Login
-    └── Register
+Usuário → [View] → [Controller] → [Model] → Banco de Dados
+                                      ↓
+                              Resposta ao Usuário
 ```
 
 ---
 
-# 🔐 Segurança
+### 📂 Estrutura de Pastas do Projeto
 
-O CrochetCommerce utiliza autenticação baseada em **JWT (JSON Web Token)** para proteger as rotas privadas da API.
-
-Além disso:
-
-- Apenas usuários autenticados podem acessar funcionalidades protegidas.
-- Cada usuário possui permissões conforme seu tipo (Cliente ou Crocheteira).
-- Produtos podem ser removidos por exclusão lógica, preservando o histórico de pedidos.
+```
+acme-3am-g1/
+│
+├── index.html          ← Página inicial (ponto de entrada do front-end)
+├── README.MD           ← Este arquivo (documentação geral do projeto)
+│
+├── api/                ← Back-end: API REST em PHP (onde mora o MVC)
+│   ├── index.php       ← Ponto de entrada da API (Front Controller)
+│   ├── .htaccess       ← Reescrita de URLs amigáveis (Apache)
+│   ├── composer.json   ← Gerenciador de dependências PHP
+│   ├── vendor/         ← Bibliotecas de terceiros (autoload do Composer)
+│   └── source/         ← Código-fonte organizado em MVC
+│       ├── Config/     ← Configurações (banco de dados, constantes, etc.)
+│       ├── Controller/ ← Controllers — lógica das rotas da API
+│       ├── Core/       ← Núcleo do sistema (conexão com BD, roteador)
+│       ├── Models/     ← Models — representação das tabelas do banco
+│       └── Support/    ← Funções auxiliares (helpers)
+│
+├── data-base/          ← Scripts SQL para criação do banco de dados
+│
+├── storage/            ← Armazenamento de arquivos (uploads, logs, etc.)
+│
+└── views/              ← Front-end: Interfaces do usuário
+    └── assets/         ← Recursos estáticos (CSS, JS, imagens)
+        ├── _common/    ← Recursos compartilhados entre todas as views
+        ├── admin/      ← Recursos do painel administrativo
+        ├── app/        ← Recursos da área logada (aplicação)
+        └── public/     ← Recursos da área pública (visitante)
+```
 
 ---
 
-# 🎯 Público-alvo
+### 🚀 Como funciona o fluxo?
 
-- Crocheteiras
-- Artesãos
-- Pequenos empreendedores
-- Consumidores interessados em produtos artesanais
-
----
-
-# 📈 Futuras melhorias
-
-- Sistema de avaliações
-- Chat entre cliente e crocheteira
-- Integração com gateways de pagamento
-- Rastreamento de entregas
-- Cupons de desconto
-- Dashboard de vendas
-- Relatórios financeiros
-- Notificações em tempo real
+1. O **usuário** acessa a página pelo navegador (`index.html` ou uma view).
+2. O **JavaScript** do front-end faz requisições para a **API** (`api/`).
+3. O **Router** (`Core/Router.php`) recebe a URL e direciona para o **Controller** correto.
+4. O **Controller** (`Controller/Api.php`) processa a requisição e consulta o **Model**.
+5. O **Model** (`Models/User.php`) busca ou salva dados no **banco de dados**.
+6. A resposta é enviada em **JSON** de volta ao front-end.
+7. O **JavaScript** atualiza a tela com os dados recebidos.
 
 ---
 
-# 👨‍💻 Desenvolvido por
+### 📚 Tecnologias Utilizadas
 
-**Lívia Goulart Montenegro**
+| Tecnologia   | Uso                              |
+|--------------|----------------------------------|
+| **PHP**      | Back-end (API REST com MVC)      |
+| **HTML**     | Estrutura das páginas            |
+| **CSS**      | Estilização das páginas          |
+| **JavaScript** | Interatividade e consumo da API |
+| **MySQL**    | Banco de dados relacional        |
+| **Composer** | Gerenciador de dependências PHP  |
+| **Apache**   | Servidor web com reescrita de URL|
 
-Projeto acadêmico desenvolvido com o objetivo de aplicar conhecimentos em desenvolvimento Full Stack, utilizando arquitetura de APIs REST, autenticação com JWT, banco de dados relacional e integração entre frontend e backend na construção de uma plataforma SaaS voltada ao comércio de produtos artesanais em crochê.
+---
+
+> 💡 **Dica:** Cada pasta possui seu próprio `README.MD` com explicações detalhadas.
+> Navegue pelas pastas para aprender mais sobre cada parte do projeto!
