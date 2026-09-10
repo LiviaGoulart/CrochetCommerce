@@ -1,74 +1,53 @@
-# 📁 api/source/
+# 🧶🎀 CrochetCommerce
 
-## O Código-Fonte — Organização MVC
+> Uma plataforma SaaS criada para unir **crochê, tecnologia e criatividade**. 💗
+
+## ✨ Objetivo
+
+O **CrochetCommerce** tem como objetivo oferecer uma plataforma para a **divulgação e comercialização de produtos de crochê**, facilitando a organização dos produtos e proporcionando uma experiência agradável para os clientes e vendedoras.
+
+A proposta é valorizar o trabalho artesanal através da tecnologia, criando um espaço **delicado, moderno e funcional**. 🧶🌷
+
+## 💻 Tecnologias
+
+* 🌸 HTML
+* 🎀 CSS
+* 💗 JavaScript
+* 🐘 PHP
+* 🗄️ MySQL
+* 🔌 API REST
+
+## 📁 Estrutura
+
+```text
+CrochetCommerce/
+│
+├── 📂 api/
+│   ├── 📂 source/
+│   ├── 📄 index.php
+│   └── 📄 composer.json
+│
+├── 📂 data-base/
+│   └── 📄 banco.sql
+│
+├── 📂 views/
+│   ├── 📂 assets/
+│   │   ├── 📂 _common/
+│   │   ├── 📂 public/
+│   │   ├── 📂 app/
+│   │   └── 📂 admin/
+│   │
+│   └── 📄 páginas do sistema
+│
+└── 📄 README.md
+```
+
+## 👩🏻‍💻 Desenvolvedora
+
+**Lívia Goulart Montenegro** 🎀
+🎓 Estudante do **3º ano do Curso Técnico em Informática — IFSul**
 
 ---
 
-### 🎯 Para que serve esta pasta?
-
-A pasta `source/` contém **todo o código-fonte** escrito por nós, organizado seguindo o padrão **MVC**.
-Cada subpasta tem uma responsabilidade clara e específica.
-
----
-
-### 📂 Estrutura desta pasta
-
-```
-source/
-├── Config/         ← Configurações do sistema (banco, constantes)
-├── Controller/     ← Controllers — recebem requisições e retornam respostas
-├── Core/           ← Núcleo — classes fundamentais do framework (Router, Connect)
-├── Models/         ← Models — representam as tabelas do banco de dados
-└── Support/        ← Helpers — funções utilitárias auxiliares
-```
-
----
-
-### 🧩 Como as pastas se relacionam?
-
-```
-Requisição HTTP
-      ↓
-[Core/Router.php]       → Analisa a URL e encontra o Controller certo
-      ↓
-[Controller/Api.php]    → Executa a lógica de negócio
-      ↓
-[Models/User.php]       → Consulta/salva dados no banco
-      ↓
-[Core/Connect.php]      → Fornece a conexão PDO com o banco
-      ↓
-[Config/Config.php]     → Fornece as credenciais e configurações
-      ↓
-[Support/Helpers.php]   → Funções auxiliares usadas em qualquer lugar
-```
-
----
-
-### 📖 Conceito: Namespaces em PHP
-
-Cada pasta corresponde a um **namespace** (espaço de nomes) no PHP.
-Namespaces organizam as classes e evitam conflitos de nomes.
-
-```php
-// A classe User está no namespace source\Models
-namespace source\Models;
-
-class User
-{
-    // ...
-}
-```
-
-Para usar essa classe em outro arquivo:
-```php
-use source\Models\User;
-
-$usuario = new User();
-```
-
-> 💡 O **Composer** faz o carregamento automático (autoload) das classes baseado nos namespaces.
-
----
-
-> 📚 Acesse cada subpasta para entender sua responsabilidade em detalhes.
-
+🧶 **CrochetCommerce**
+*Feito com código, criatividade e muito carinho. ♡*
