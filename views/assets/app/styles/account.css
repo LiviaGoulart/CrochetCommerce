@@ -466,6 +466,19 @@ textarea {
     color: white;
 }
 
+.delete-account-button{
+    height: 42px;
+
+    padding: 0 20px;
+
+    border: 1px solid #efbfd1;
+    border-radius: 14px;
+
+    background-color: white;
+
+    color: #7b6475;
+}
+
 .cancel-button {
     height: 42px;
 
@@ -478,3 +491,12 @@ textarea {
 
     color: #7b6475;
 }
+
+/* .form-buttons .delete-account-button {
+    height: 42px;
+    padding: 0 20px;
+    border: 1px solid #efbfd1;
+    border-radius: 14px;
+    background: white;
+    color: #7b6475;
+} */

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrochetCommerce - Cadastrar Novo Produto</title>
+    <!-- Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="assets/admin/scripts/newProduct.js"></script>
+    <link rel="stylesheet" href="assets/admin/styles/newProduct.css">
+</head>
+
+<body>
+
+<!-- HEADER DA CROCHETEIRA -->
+<header>
+    <section class="logo-area">
+        <button class="logo-button" title="CrochetCommerce Logo">✂</button>
+        <section>
+            <h1>CrochetCommerce</h1>
+            <p>Painel de Vendas</p>
+        </section>
+    </section>
+
+    <section class="profile-area">
+        <button class="notification-button" title="Notificações">🔔</button>
+        <section class="profile-info">
+            <h2 id="user-name">Maria Silva</h2>
+            <p>Crocheteira</p>
+        </section>
+        <button class="profile-button" title="Perfil do Usuário">👤</button>
+    </section>
+</header>
+
+<main>
+    <!-- BARRA LATERAL / NAVEGAÇÃO -->
+    <aside>
+        <a href="add-product.html" class="new-product-button">
+            <span>+</span> Novo Produto
+        </a>
+
+        <nav>
+            <a href="#" class="menu-button">
+                <span>◫</span> Dashboard
+            </a>
+            <a href="#" class="menu-button">
+                <span>◈</span> Meus Produtos
+            </a>
+            <a href="#" class="menu-button">
+                <span>⌲</span> Pedidos
+            </a>
+            <a href="#" class="menu-button">
+                <span>📊</span> Análises
+            </a>
+            <a href="#" class="menu-button" id="perfil">
+                <span>⊚</span> Meu Perfil / Ateliê
+            </a>
+            <a href="#" class="menu-button">
+                <span>⚙</span> Configurações
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL - CADASTRO DE PRODUTO -->
+    <section class="content-container">
+        
+        <header class="page-header">
+            <h2>Cadastrar Novo Produto</h2>
+            <p>Preencha as informações detalhadas para disponibilizar seu produto artesanal no catálogo.</p>
+        </header>
+
+        <form id="product-form" onsubmit="handleProductSubmit(event)">
+            <section class="product-grid">
+                
+                <!-- COLUNA ESQUERDA: FORMULÁRIO COMPLETO -->
+                <section class="form-left-column">
+                    
+                    <!-- 1. INFORMAÇÕES BÁSICAS -->
+                    <article class="form-section-card">
+                        <h3 class="section-title">
+                            <span>🧶</span> Informações Básicas
+                        </h3>
+
+                        <section class="form-group">
+                            <label for="prod-name">Nome do Produto <span class="required">*</span></label>
+                            <input type="text" id="prod-name" class="form-control" placeholder="Ex: Amigurumi Urso Ted de Crochê" required oninput="updateLivePreview()">
+                        </section>
+
+                        <section class="form-grid-2">
+                            <section class="form-group">
+                                <label for="prod-category">Categoria <span class="required">*</span></label>
+                                <select id="prod-category" class="form-control" required onchange="updateLivePreview()">
+                                    <option value="" disabled selected>Selecione uma categoria</option>
+                                    <option value="Amigurumi">Amigurumi</option>
+                                    <option value="Bolsas">Bolsas & Acessórios</option>
+                                    <option value="Vestuário">Vestuário & Moda</option>
+                                    <option value="Decoração">Decoração & Lar</option>
+                                    <option value="Tapetes">Tapetes & Passadeiras</option>
+                                    <option value="Outros">Outros Artesanatos</option>
+                                </select>
+                            </section>
+
+                            <section class="form-group">
+                                <label for="prod-status">Status de Publicação</label>
+                                <select id="prod-status" class="form-control" onchange="updateLivePreview()">
+                                    <option value="Ativo" selected>Ativo (Publicar Imediatamente)</option>
+                                    <option value="Rascunho">Rascunho (Manter Inativo)</option>
+                                </select>
+                            </section>
+                        </section>
+
+                        <section class="form-grid-3">
+                            <section class="form-group">
+                                <label for="prod-price">Preço de Venda <span class="required">*</span></label>
+                                <section class="input-prefix-wrapper">
+                                    <span class="input-prefix">R$</span>
+                                    <input type="number" id="prod-price" class="form-control" placeholder="89,90" step="0.01" min="0" required oninput="updateLivePreview()">
+                                </section>
+                            </section>
+
+                            <section class="form-group">
+                                <label for="prod-old-price">Preço Original (De)</label>
+                                <section class="input-prefix-wrapper">
+                                    <span class="input-prefix">R$</span>
+                                    <input type="number" id="prod-old-price" class="form-control" placeholder="110,00" step="0.01" min="0" oninput="updateLivePreview()">
+                                </section>
+                            </section>
+
+                            <section class="form-group">
+                                <label for="prod-stock">Estoque Pronta Entrega</label>
+                                <input type="number" id="prod-stock" class="form-control" value="1" min="0" oninput="updateLivePreview()">
+                            </section>
+                        </section>
+
+                        <section class="form-group form-group-full">
+                            <label class="toggle-container">
+                                <input type="checkbox" id="prod-custom" onchange="toggleCustomDays()">
+                                <span><strong>Produzido Sob Encomenda?</strong> (Aumenta o prazo de entrega necessário)</span>
+                            </label>
+                        </section>
+
+                        <section class="form-group" id="custom-days-group" style="display: none;">
+                            <label for="prod-lead-time">Prazo de Confecção (dias úteis)</label>
+                            <input type="number" id="prod-lead-time" class="form-control" placeholder="Ex: 7" min="1" value="7" oninput="updateLivePreview()">
+                        </section>
+                    </article>
+
+                    <!-- 2. MÍDIA & IMAGENS DO PRODUTO -->
+                    <article class="form-section-card">
+                        <h3 class="section-title">
+                            <span>📸</span> Fotos do Produto
+                        </h3>
+
+                        <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-title">Clique ou arraste as fotos da peça aqui</div>
+                            <div class="upload-subtitle">Formatos aceitos: JPG, PNG, WEBP (A primeira imagem será a principal)</div>
+                            <input type="file" id="file-input" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+                        </div>
+
+                        <div class="image-previews-grid" id="previews-grid"></div>
+                    </article>
+
+                    <!-- 3. DESCRIÇÃO DO PRODUTO -->
+                    <article class="form-section-card">
+                        <h3 class="section-title">
+                            <span>📝</span> Descrição do Produto
+                        </h3>
+
+                        <section class="form-group">
+                            <label for="prod-desc">Descrição Detalhada da Peça</label>
+                            <textarea id="prod-desc" class="form-control" placeholder="Conte a história deste artesanal, detalhes do acabamento e sugestões de presente..."></textarea>
+                        </section>
+                    </article>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <footer class="form-actions-footer">
+                        <button type="submit" class="btn-primary">
+                            <span>✓</span> Salvar e Publicar Produto
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="saveDraft()">
+                            💾 Salvar como Rascunho
+                        </button>
+                        <button type="button" class="btn-cancel" onclick="resetForm()">
+                            Cancelar
+                        </button>
+                    </footer>
+
+                </section>
+
+                <!-- COLUNA DIREITA: CARD DE PRÉ-VISUALIZAÇÃO EM TEMPO REAL -->
+                <aside class="preview-column">
+                    <section class="preview-sticky-card">
+                        <header class="preview-badge-header">
+                            <span class="preview-tag">Pré-visualização da Loja</span>
+                            <span id="preview-status-badge" style="font-size: 12px; font-weight: bold; color: #22c55e;">● Ativo</span>
+                        </header>
+
+                        <div class="preview-image-box" id="preview-image-container">
+                            <span style="font-size: 32px; color: #d67da3;">🧶</span>
+                            <span style="font-size: 12px; color: #a08899; margin-top: 6px;">Envie uma imagem para visualizar</span>
+                        </div>
+
+                        <h3 class="preview-title" id="preview-title-display">Nome do Seu Produto</h3>
+                        <p class="preview-category" id="preview-category-display">Categoria Selecionada</p>
+
+                        <div class="preview-price-row">
+                            <span class="preview-price" id="preview-price-display">R$ 0,00</span>
+                            <span class="preview-old-price" id="preview-old-price-display"></span>
+                        </div>
+
+                        <div class="preview-stock-status">
+                            <span class="status-dot" id="preview-dot"></span>
+                            <span id="preview-stock-display">1 unidade em pronta entrega</span>
+                        </div>
+                    </section>
+                </aside>
+
+            </section>
+        </form>
+
+    </section>
+</main>
+
+<!-- NOTIFICAÇÃO TOAST -->
+<div id="toast" class="toast-notification">
+    <span id="toast-icon">✨</span>
+    <span id="toast-message">Produto cadastrado com sucesso!</span>
+</div>
+
+</body>
+</html>

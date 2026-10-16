@@ -220,43 +220,28 @@ abstract class Model
         }
     }
 
-    public function deleteById(int $id): bool
-    {
-        try {
-            $query = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = :id";
-            $stmt = Connect::getInstance()->prepare($query);
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-            if ($stmt->rowCount() < 1) {
-                $this->errorMessage = "Registro não encontrado ou inativo.";
-                return false;
-            }
-            return true;
-        } catch (PDOException $e) {
-            $this->errorMessage = $e->getMessage();
+    
+public function deleteById(int $id): bool
+{
+    try {
+        $query = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->rowCount() < 1) {
+            $this->errorMessage = "Nenhum registro foi excluído.";
             return false;
         }
+
+        return true;
+
+    } catch (PDOException $e) {
+        $this->errorMessage = $e->getMessage();
+        return false;
     }
+}
 
-    public function softDeleteById(int $id): bool
-    {
-        try {
-            $query = "UPDATE {$this->table} SET active = 0 WHERE {$this->primaryKey} = :id";
-            $stmt = Connect::getInstance()->prepare($query);
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-
-            if ($stmt->rowCount() < 1) {
-                $this->errorMessage = "Registro não encontrado ou já inativo.";
-                return false;
-            }
-            return true;
-
-        } catch (PDOException $e) {
-            $this->errorMessage = $e->getMessage();
-            return false;
-        }
-    }
 
     protected function extractPayloadFromGetters(): array
     {

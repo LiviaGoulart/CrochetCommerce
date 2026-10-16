@@ -1,9 +1,16 @@
+
+import Users from "../../_common/classes/Users.js";
+import { Toast } from "../../_common/classes/Toast.js";
+import { LoginFormController } from "../../_common/classes/FormController.js";
+
+const userService = new Users();
+const users = new Users();
+
 class Login {
 
     constructor() {
         this.loginForm = document.querySelector("#login-form");
         this.register = document.querySelector("#register");
-        this.login = document.querySelector("#login");
         this.registerLink = document.querySelector(".register-link");
 
         this.init();
@@ -27,62 +34,47 @@ class Login {
     }
 
     submit() {
+    this.loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-        this.loginForm.addEventListener("submit", (event) => {
+        ///console.log("1 - SUBMIT FOI EXECUTADO");
 
-            event.preventDefault();
+        if (!LoginFormController.validate(this.loginForm)) {
+            //console.log("2 - VALIDAÇÃO FALHOU");
+            return;
+        }
 
-            const email = document.querySelector("#email").value;
-            const password = document.querySelector("#password").value;
+        //console.log("3 - VALIDAÇÃO OK");
 
-            const data = {
-                email: email,
-                password: password
-            };
+       try {
+    const formData = new FormData(this.loginForm);
 
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-            fetch("../api/users/login", {
+    const result = await userService.loginGeral(email, password);
 
-                method: "POST",
+    if (result.code === 200) {
+        console.log("Dados recebidos do login:", result.data);
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        localStorage.setItem("user", JSON.stringify(result.data));
 
-                body: JSON.stringify(data)
-
-            })
-
-            .then(response => response.json())
-
-            .then(result => {
-
-                console.log(result);
-
-                if (result.type === "success") {
-
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(result.data)
-                    );
-
-                if (result.data.typeId === 2) {
-                 window.location.href = "dashboard.html";
-                } else {
-                 window.location.href = "home.html";
-}
-
-                } else {
-
-                    alert(result.message);
-
-                }
-
-            });
-
-        });
-
+        if (Number(result.data.typeId) === 2) {
+            window.location.href = "dashboard.html";
+        }
+         else if (Number(result.data.typeId) === 1) {
+            window.location.href = "home.html";
+        } 
+        else {
+            console.error("Tipo de usuário desconhecido:", result.data.typeId);
+        }
     }
+} catch (error) {
+    console.error("ERRO NO LOGIN:", error);
+    Toast.show("Não foi possível realizar o login.", "error");
+}
+    });
+}
 
 }
 
