@@ -1,39 +1,42 @@
 import HttpClientBase from "./HttpClientBase.js";
 
 export default class Users extends HttpClientBase {
+
+    async loginCrochet(email, password) {
+    return this.post("/users/login", { email, password });
+    }
+
     async login(email, password) {
-        return this.postForm("/users/login", { email, password });
-    }
-
-    async loginFromForm(form) {
-        return this.postForm("/users/login", form);
-    }
-
-    async loginAdmin(email, password) {
-        return this.postForm("/users/login-admin", { email, password });
-    }
-
-    async loginAdminFromForm(form) {
-        return this.postForm("/users/login-admin", form);
-    }
-
-    async loginAthlete(email, password) {
-        return this.postForm("/users/login-athlete", { email, password });
-    }
-
-    async loginAthleteFromForm(form) {
-        return this.postForm("/users/login-athlete", form);
+        return this.post("/users/login-client", { email, password });
     }
 
     async register(data) {
-        return this.postForm("/users/register", data);
+        return this.post("/users/register", data);
+    }
+
+    async registerClient(data) {
+        return this.post("/users/register-client", data);
     }
 
     async update(data) {
         return this.put("/users/update", data);
     }
 
-    async updateAdmin(data) {
-        return this.put("/users/update-admin", data);
+    async updateClient(data) {
+        return this.put("/users/update-client", data);
     }
+
+    async deleteCrochet() {
+    return this.delete("/users/delete");
+    }
+
+    async deleteClient() {
+    return this.delete("/users/delete-client");
+    }
+
+
+    async loginGeral(email, password) {
+    return this.post("/users/login", { email, password });
+    }
+
 }

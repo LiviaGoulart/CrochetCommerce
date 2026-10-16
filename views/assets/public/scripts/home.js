@@ -1,30 +1,36 @@
+import FaqService from "../../_common/classes/FaqService.js";
+
+const faqService = new FaqService();
+
+
 const favoriteButtons = document.querySelectorAll(".favorite-button");
 const profileButton = document.querySelector("#profileIcon");
 
 
-console.log("oi..");
+//console.log("oi..");
 
 async function fetchFAQs() {
     try {
-        const response = await fetch("http://localhost/crochet/api/faqs/list");//não ta pegando por categoria :(
-        const faqs = await response.json();
+        const result = await faqService.list();
         const listFaqs = document.querySelector(".faq-section");
-        
-        // Remove itens antigos caso a função seja chamada mais de uma vez, mantendo apenas o h2
-        const existingDetails = listFaqs.querySelectorAll("details");
-        existingDetails.forEach(item => item.remove());
 
-        faqs.data.forEach(faq => {
-            const faqItem = document.createElement("details");
-            faqItem.className = "faq-item";
-            faqItem.innerHTML = `
-                <summary>${faq.question}</summary>
-                <p>${faq.answer}</p>
-            `;
-            listFaqs.append(faqItem);
+        listFaqs.querySelectorAll("details").forEach(item => item.remove());
+
+        result.data.forEach(faq => {
+            const item = document.createElement("details");
+            item.className = "faq-item";
+
+            const question = document.createElement("summary");
+            question.textContent = faq.question;
+
+            const answer = document.createElement("p");
+            answer.textContent = faq.answer;
+
+            item.append(question, answer);
+            listFaqs.append(item);
         });
     } catch (error) {
-        console.error("Erro ao carregar as FAQs:", error);
+        console.error("Erro ao carregar FAQs:", error);
     }
 }
 

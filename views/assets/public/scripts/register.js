@@ -1,3 +1,7 @@
+import Users from "../../_common/classes/Users.js";
+
+const userService = new Users();
+
 class Register {
 
     constructor() {
@@ -5,7 +9,7 @@ class Register {
         this.typeCards = document.querySelectorAll(".type-card");
         this.loginButton = document.querySelector("#loginButton");
 
-        this.selectedType = "crocheteira";
+        this.selectedType = "client";
 
         this.init();
     }
@@ -17,98 +21,78 @@ class Register {
     }
 
     selectType() {
+    this.typeCards.forEach((card) => {
+        card.addEventListener("click", () => {
 
-        this.typeCards.forEach((card) => {
-
-            card.addEventListener("click", () => {
-
-                this.typeCards.forEach((item) => {
-                    item.classList.remove("active-type");
-                });
-
-                card.classList.add("active-type");
-
-                this.selectedType = card.dataset.type;
-
+            this.typeCards.forEach((item) => {
+                item.classList.remove("active-type");
             });
 
-        });
+            card.classList.add("active-type");
 
-    }
+            this.selectedType = card.dataset.type;
+
+            console.log("TIPO ESCOLHIDO:", this.selectedType);
+        });
+    });
+}
 
     login() {
-
         this.loginButton.addEventListener("click", () => {
             window.location.href = "login.html";
         });
-
     }
 
-    async submit() {
-
+    submit() {
         this.form.addEventListener("submit", async (event) => {
-
             event.preventDefault();
 
-            const name = document.querySelector("#name").value;
-            const email = document.querySelector("#email").value;
-            const password = document.querySelector("#password").value;
-
             const data = {
-                name: name,
-                email: email,
-                password: password
+                name: document.querySelector("#name").value,
+                email: document.querySelector("#email").value,
+                password: document.querySelector("#password").value
             };
 
+            try {
+                let result;
 
-       let route;
+                if (this.selectedType === "seller") {
+                    result = await userService.register(data);
+                } else if (this.selectedType === "client") {
+                    result = await userService.registerClient(data);
+                }
 
-       if(this.selectedType==="seller"){
-        route = "../api/users/register";
-       }
-       else{
-        route = "../api/users/register-client";
-       }
+                console.log("Cadastro:", result);
 
-       fetch(route, {
-                method: "POST",
+                if (
+                    result.type === "created" ||
+                    result.type === "success"
+                ) {
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(result.data)
+                    );
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(data)
-
-            })
-            .then(response => response.json())
-
-            .then(result => {
-
-                console.log(result);
-
-                if (result.type === "created") {
-
-                    localStorage.setItem("user", JSON.stringify(result.data));
-
+                    console.log("TIPO ANTES DO CADASTRO:", this.selectedType);
 
                     if (this.selectedType === "seller") {
                         window.location.href = "dashboard.html";
-                    } else {
+                    } else if (this.selectedType === "client") {
                         window.location.href = "home.html";
                     }
-
                 } else {
-
-                    alert(result.message);
-
+                    alert(
+                        result.message ||
+                        "Não foi possível realizar o cadastro."
+                    );
                 }
 
-            });
-
+            } catch (error) {
+                console.error("Erro no cadastro:", error);
+                alert("Não foi possível realizar o cadastro.");
+            }
         });
-
     }
-
 }
 
 new Register();

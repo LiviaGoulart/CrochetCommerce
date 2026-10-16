@@ -2,7 +2,7 @@ export default class HttpClientBase {
     #baseUrl;
     #defaultHeaders;
 
-    constructor(baseUrl = "http://localhost:8080/acme-3am/api") {
+    constructor(baseUrl = "http://localhost/crochet/api") {
         this.#baseUrl = baseUrl;
         this.#defaultHeaders = {
             "Content-Type": "application/json"
@@ -80,6 +80,7 @@ export default class HttpClientBase {
                 delete headers["Content-Type"];
             }
 
+            console.log(url);
             const response = await fetch(url, {
                 ...fetchConfig,
                 headers

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrochetCommerce - Conta da Crocheteira</title>
+    <link rel="stylesheet" href="assets/admin/styles/accountCrochet.css">
+    <script type="module" src="assets/admin/scripts/accountCrochet.js"></script>
+</head>
+<body>
+
+<!-- HEADER DA CROCHETEIRA -->
+<header>
+    <section class="logo-area">
+        <button class="logo-button" title="CrochetCommerce Logo">✂</button>
+        <section>
+            <h1>CrochetCommerce</h1>
+            <p>Painel da Crocheteira</p>
+        </section>
+    </section>
+
+    <section class="profile-area">
+        <button class="notification-button" title="Notificações">🔔</button>
+        <section class="profile-info">
+            <h2 class="artisan-name"></h2>
+            <p class="store-name">Ateliê Mãos de Fada</p>
+        </section>
+        <button class="profile-button" title="Perfil do Usuário">👤</button>
+    </section>
+</header>
+
+<main>
+    <!-- BARRA LATERAL / NAVEGAÇÃO -->
+    <aside>
+        <button class="new-product-button">
+            <span>+</span> Novo Produto
+        </button>
+
+        <nav>
+            <a href="#" class="menu-button" id="dashboard">
+                <span>◫</span> Dashboard
+            </a>
+            <a href="#" class="menu-button">
+                <span>◈</span> Meus Produtos
+            </a>
+            <a href="#" class="menu-button">
+                <span>⌲</span> Pedidos
+            </a>
+            <a href="#" class="menu-button">
+                <span>📊</span> Análises
+            </a>
+            <a href="#" class="menu-button active-menu">
+                <span>⊚</span> Meu Perfil / Ateliê
+            </a>
+            <a href="#" class="menu-button">
+                <span>⚙</span> Configurações
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DA CONTA -->
+    <section class="account-content">
+
+        <!-- CARD PRINCIPAL DO PERFIL DO ATELIÊ -->
+        <section class="profile-card">
+            <section class="profile-banner"></section>
+
+            <section class="profile-info-card">
+                <section class="profile-image-area">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" alt="Foto de perfil da Crocheteira">
+                    <button class="camera-button" title="Alterar foto de perfil">📷</button>
+                </section>
+
+                <!-- <button class="edit-profile-button" onclick="switchTab('tab-atelie')">
+                    ✎ Editar Ateliê
+                </button> -->
+
+                <header class="store-header-title">
+                    <h2 id="store-name-display">Ateliê Mãos de Fada</h2>
+                    <span class="badge-verified">✓ Verificada</span>
+                </header>
+
+                <p class="bio" id="bio-display">
+                    Especialista em amigurumis artesanais, bolsas de crochê e peças de decoração sob medida. Amor em cada ponto desde 2018. 🧶✨
+                </p>
+
+                <p class="city" id="city-display">
+                    📍 São Paulo, SP • Atendimento Nacional
+                </p>
+
+                <!-- ESTATÍSTICAS RÁPIDAS DA VENDEDORA -->
+                <section class="stats-area">
+                    <article class="stat-card">
+                        <span class="stat-icon">$</span>
+                        <h3>R$ 12.450</h3>
+                        <p>Receita Total</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">⌲</span>
+                        <h3>152</h3>
+                        <p>Vendas Realizadas</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">◈</span>
+                        <h3>24</h3>
+                        <p>Produtos Ativos</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span class="stat-icon">☆</span>
+                        <h3>4.9</h3>
+                        <p>Avaliação da Loja</p>
+                    </article>
+                </section>
+            </section>
+        </section>
+
+        <!-- SEÇÃO DE ABAS COM FORMULÁRIOS E AVALIAÇÕES -->
+        <section class="tabs-section">
+            <nav class="tabs-buttons">
+                <button class="tab-button active-tab" onclick="openTab(event, 'tab-atelie')">
+                    ✎ Dados do Ateliê
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'tab-banco')">
+                    💳 Dados Bancários & PIX
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'tab-envio')">
+                    🚚 Configurações de Envio
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'tab-avaliacoes')">
+                    ⭐ Avaliações dos Clientes
+                </button>
+            </nav>
+
+            <section class="tabs-content">
+                
+                <!-- ABA 1: DADOS DO ATELIÊ -->
+                <section id="tab-atelie" class="tab-pane active-pane">
+                    <form id="atelie-form">
+                        <h3 class="section-subtitle">Informações da Loja e Perfil</h3>
+
+                        <section class="form-grid">
+                            <label class="form-control">
+                                <span>Nome do Ateliê / Marca</span>
+                                <input type="text" class="store-name" value="Ateliê Mãos de Fada">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Nome da Crocheteira Responsável</span>
+                                <input type="text" class="artisan-name" value="Maria Silva">
+                            </label>
+
+                            <label class="form-control">
+                                <span>CPF ou CNPJ</span>
+                                <input type="text" id="cpf-cnpj" value="123.456.789-00">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Telefone / WhatsApp Comercial</span>
+                                <input type="tel" id="phone" value="(11) 98765-4321">
+                            </label>
+
+                            <label class="form-control">
+                                <span>E-mail de Contato</span>
+                                <input type="email" id="email" value="maria.croche@exemplo.com">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Cidade / Estado</span>
+                                <input type="text" id="address" value="São Paulo, SP">
+                            </label>
+
+                            <label class="form-control form-group-full">
+                                <span>Link do Instagram / Redes Sociais</span>
+                                <input type="text" id="instagram" value="https://instagram.com/maosdefadacroche">
+                            </label>
+
+                            <label class="form-control form-group-full">
+                                <span>Biografia / Descrição da Loja</span>
+                                <textarea id="bio">Especialista em amigurumis artesanais, bolsas de crochê e peças de decoração sob medida. Amor em cada ponto desde 2018. 🧶✨</textarea>
+                            </label>
+                        </section>
+
+                        <footer class="form-buttons">
+                            <button type="submit" class="save-button">✓ Salvar Alterações</button>
+                            <button type="reset" class="cancel-button">✕ Cancelar</button>
+                            <button type="button" class="delete-button">Excluir Conta do Ateliê</button>
+                        </footer>
+                    </form>
+                </section>
+
+                <!-- ABA 2: DADOS BANCÁRIOS -->
+                <section id="tab-banco" class="tab-pane">
+                    <form id="bank-form" onsubmit="handleFormSubmit(event)">
+                        <h3 class="section-subtitle">Conta para Recebimento de Vendas</h3>
+
+                        <section class="form-grid">
+                            <label class="form-control">
+                                <span>Tipo de Chave PIX</span>
+                                <select id="pix-key-type">
+                                    <option value="cpf" selected>CPF / CNPJ</option>
+                                    <option value="email">E-mail</option>
+                                    <option value="phone">Telefone</option>
+                                    <option value="random">Chave Aleatória</option>
+                                </select>
+                            </label>
+
+                            <label class="form-control">
+                                <span>Chave PIX Principal</span>
+                                <input type="text" id="pix-key" value="123.456.789-00">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Banco</span>
+                                <input type="text" id="bank-name" value="Banco do Brasil">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Nome do Titular da Conta</span>
+                                <input type="text" id="account-holder" value="Maria Silva">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Agência</span>
+                                <input type="text" id="agency" value="1234-5">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Número da Conta Corrente</span>
+                                <input type="text" id="account-num" value="98765-4">
+                            </label>
+                        </section>
+
+                        <footer class="form-buttons">
+                            <button type="submit" class="save-button">✓ Atualizar Dados Bancários</button>
+                            <button type="reset" class="cancel-button">✕ Cancelar</button>
+                        </footer>
+                    </form>
+                </section>
+
+                <!-- ABA 3: CONFIGURAÇÕES DE ENVIO -->
+                <section id="tab-envio" class="tab-pane">
+                    <form id="shipping-form" onsubmit="handleFormSubmit(event)">
+                        <h3 class="section-subtitle">Origem de Postagem e Políticas de Entrega</h3>
+
+                        <section class="form-grid">
+                            <label class="form-control">
+                                <span>CEP de Origem das Encomendas</span>
+                                <input type="text" id="cep-origin" value="01000-000">
+                            </label>
+
+                            <label class="form-control">
+                                <span>Prazo Médio de Confecção (dias)</span>
+                                <input type="number" id="production-time" value="7" min="1">
+                            </label>
+
+                            <label class="form-control form-group-full">
+                                <span>Oferecer Frete Grátis em Compras Acima De (R$)</span>
+                                <input type="number" id="free-shipping-threshold" value="250.00" step="10.00">
+                            </label>
+
+                            <label class="form-control form-group-full">
+                                <span>Política de Encomendas & Trocas</span>
+                                <textarea id="shipping-policy">Peças produzidas sob encomenda levam de 5 a 10 dias úteis para confecção antes do envio. Aceitamos trocas por defeito em até 7 dias após o recebimento.</textarea>
+                            </label>
+                        </section>
+
+                        <footer class="form-buttons">
+                            <button type="submit" class="save-button">✓ Salvar Políticas de Envio</button>
+                            <button type="reset" class="cancel-button">✕ Cancelar</button>
+                        </footer>
+                    </form>
+                </section>
+
+                <!-- ABA 4: AVALIAÇÕES DOS CLIENTES -->
+                <section id="tab-avaliacoes" class="tab-pane">
+                    <h3 class="section-subtitle">Últimas Avaliações Recebidas</h3>
+
+                    <section class="reviews-list">
+                        <article class="review-card">
+                            <header class="review-header">
+                                <section class="review-user">
+                                    <span class="review-avatar">CS</span>
+                                    <section class="review-user-info">
+                                        <h4>Camila Souza</h4>
+                                        <p>Avaliado em 12/10/2026</p>
+                                    </section>
+                                </section>
+                                <span class="review-stars">★★★★★</span>
+                            </header>
+                            <p class="review-comment">
+                                "O amigurumi do urso Ted é impecável! Veio super cheiroso, muito bem embalado e a entrega foi mais rápida do que o combinado. Parabéns pelo trabalho lindo!"
+                            </p>
+                            <span class="review-product-tag">Amigurumi Urso Ted</span>
+                        </article>
+
+                        <article class="review-card">
+                            <header class="review-header">
+                                <section class="review-user">
+                                    <span class="review-avatar">JL</span>
+                                    <section class="review-user-info">
+                                        <h4>Juliana Lima</h4>
+                                        <p>Avaliado em 28/09/2026</p>
+                                    </section>
+                                </section>
+                                <span class="review-stars">★★★★★</span>
+                            </header>
+                            <p class="review-comment">
+                                "Comprei a bolsa de crochê e superou todas as minhas expectativas! Acabamento perfeito e alça super reforçada."
+                            </p>
+                            <span class="review-product-tag">Bolsa Praia Boho</span>
+                        </article>
+
+                        <article class="review-card">
+                            <header class="review-header">
+                                <section class="review-user">
+                                    <span class="review-avatar">RA</span>
+                                    <section class="review-user-info">
+                                        <h4>Renata Almeida</h4>
+                                        <p>Avaliado em 15/09/2026</p>
+                                    </section>
+                                </section>
+                                <span class="review-stars">★★★★☆</span>
+                            </header>
+                            <p class="review-comment">
+                                "O kit de coelhinhos é uma graça! Apenas o prazo dos Correios atrasou um pouquinho, mas o atendimento da crocheteira foi impecável."
+                            </p>
+                            <span class="review-product-tag">Kit Coelhinhos Decorativos</span>
+                        </article>
+                    </section>
+                </section>
+
+            </section>
+        </section>
+
+    </section>
+</main>
+
+</body>
+</html>
