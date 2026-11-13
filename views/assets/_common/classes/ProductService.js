@@ -31,4 +31,9 @@ export default class ProductService extends HttpClientBase {
     async remove(id) {
         return this.delete(`/products/${id}`);
     }
+
+    async listStore() {
+    const response = await this.get("/products/store");
+    return response.data.map(item => Product.fromAPI(item));
+}
 }

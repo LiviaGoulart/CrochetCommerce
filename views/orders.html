@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrochetCommerce - Pedidos</title>
+    <!-- CSS Geral e CSS Específico da Tela de Pedidos -->
+    <link rel="stylesheet" href="assets/admin/styles/accountCrochet.css">
+    <link rel="stylesheet" href="assets/admin/styles/orders.css">
+    <script type="module" src="assets/admin/scripts/orders.js"></script>
+</head>
+<body>
+
+<!-- HEADER DA CROCHETEIRA -->
+<header>
+    <section class="logo-area">
+        <button class="logo-button" title="CrochetCommerce Logo">✂</button>
+        <section>
+            <h1>CrochetCommerce</h1>
+            <p>Painel da Crocheteira</p>
+        </section>
+    </section>
+
+    <section class="profile-area">
+        <section class="profile-info">
+            <h2 class="artisan-name">Maria Silva</h2>
+            <p class="store-name">Ateliê Mãos de Fada</p>
+        </section>
+            <button class="profile-button" title="Perfil do Usuário">
+                <img id="header-profile-photo"
+                    src="assets/images/default-profile.svg"
+                    alt="Foto de perfil">
+            </button>
+        </section>
+</header>
+
+<main>
+    <!-- BARRA LATERAL / NAVEGAÇÃO -->
+    <aside>
+            <button class="new-product-button" type="button">
+                <span>+</span> Novo Produto
+            </button>
+
+        <nav>
+            <a href="myProducts.html" class="menu-button">
+                <span>◈</span> Meus Produtos
+            </a>
+            <a href="orders.html" class="menu-button active-menu">
+                <span>⌲</span> Pedidos
+            </a>
+            <a href="accountCrochet.html" class="menu-button">
+                <span>⊚</span> Meu Perfil / Ateliê
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DA TELA DE PEDIDOS -->
+    <section class="account-content">
+
+        <!-- CARDS DE ESTATÍSTICAS RÁPIDAS DE PEDIDOS -->
+        <section class="orders-stats-grid">
+    <article class="order-stat-card">
+        <span class="stat-icon icon-pending">⏳</span>
+        <section>
+            <h3 id="pending-count">0</h3>
+            <p>Pendentes de Aceite</p>
+        </section>
+    </article>
+
+    <article class="order-stat-card">
+        <span class="stat-icon icon-crafting">🧶</span>
+        <section>
+            <h3 id="crafting-count">0</h3>
+            <p>Em Confecção</p>
+        </section>
+    </article>
+
+    <article class="order-stat-card">
+        <span class="stat-icon icon-shipped">🚚</span>
+        <section>
+            <h3 id="shipped-count">0</h3>
+            <p>Enviados</p>
+        </section>
+    </article>
+
+    <article class="order-stat-card">
+        <span class="stat-icon icon-completed">✓</span>
+        <section>
+            <h3 id="completed-count">0</h3>
+            <p>Concluídos</p>
+        </section>
+    </article>
+</section>
+
+<section class="orders-list" id="orders-list">
+    <p>Carregando pedidos...</p>
+</section>
+
+</main>
+
+</body>
+</html>

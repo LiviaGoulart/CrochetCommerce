@@ -492,11 +492,150 @@ textarea {
     color: #7b6475;
 }
 
-/* .form-buttons .delete-account-button {
-    height: 42px;
-    padding: 0 20px;
+.profile-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+}
+
+.profile-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* PEDIDOS DO CLIENTE */
+
+.customer-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.customer-order-card {
+    background: #fff;
     border: 1px solid #efbfd1;
-    border-radius: 14px;
-    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.customer-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f6dce6;
+}
+
+.customer-order-header h3 {
+    font-size: 17px;
+    color: #4a2f43;
+}
+
+.customer-order-status {
+    background: #fff3cd;
+    color: #856404;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.customer-order-date,
+.customer-order-seller {
     color: #7b6475;
-} */
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.customer-order-products {
+    margin-top: 16px;
+}
+
+.customer-order-product {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid #f6dce6;
+}
+
+.customer-order-product img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.customer-order-product h4 {
+    color: #4a2f43;
+    margin-bottom: 6px;
+}
+
+.customer-order-product p {
+    color: #7b6475;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.customer-order-total {
+    text-align: right;
+    color: #ef82ab;
+    font-size: 17px;
+    font-weight: bold;
+    padding-top: 14px;
+    border-top: 1px solid #f6dce6;
+}
+
+
+#btn-save-photo {
+    display: block;
+    margin: 12px auto;
+    padding: 10px 22px;
+
+    background: #a86b91;
+    color: #fff;
+
+    border: none;
+    border-radius: 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+#btn-save-photo:hover {
+    background: #8f5278;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(143, 82, 120, 0.25);
+}
+
+#btn-save-photo:active {
+    transform: scale(0.96);
+}
+
+#btn-save-photo[hidden] {
+    display: none;
+}
+
+.profile-image-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#btn-save-photo {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}

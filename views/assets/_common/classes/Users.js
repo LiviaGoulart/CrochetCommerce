@@ -39,4 +39,17 @@ export default class Users extends HttpClientBase {
     return this.post("/users/login", { email, password });
     }
 
+    async uploadPhoto(file) {
+        const formData = new FormData();
+        formData.append("photo", file);
+
+        return this.postForm("/users/photo", formData);
+    }
+
+    async uploadPhotoClient(file) {
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    return this.postForm("/users/photo-client", formData);
+    }
 }

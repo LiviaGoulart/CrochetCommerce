@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrochetCommerce - Meus Produtos</title>
+    <link rel="stylesheet" href="assets/admin/styles/accountCrochet.css">
+    <link rel="stylesheet" href="assets/admin/styles/myProducts.css">
+    <script type="module" src="assets/admin/scripts/MyProducts.js"></script>
+</head>
+<body>
+
+<!-- HEADER DA CROCHETEIRA -->
+<header>
+    <section class="logo-area">
+        <button class="logo-button" title="CrochetCommerce Logo">✂</button>
+        <section>
+            <h1>CrochetCommerce</h1>
+            <p>Painel da Crocheteira</p>
+        </section>
+    </section>
+
+    <section class="profile-area">
+        <section class="profile-info">
+            <h2 class="artisan-name">Maria Silva</h2>
+            <p class="store-name">Ateliê Mãos de Fada</p>
+        </section>
+        <button class="profile-button" title="Perfil do Usuário">
+            <img id="header-profile-photo"
+                src="assets/images/default-profile.svg"
+                alt="Foto de perfil">
+        </button>
+    </section>
+</header>
+
+<main>
+    <!-- BARRA LATERAL / NAVEGAÇÃO COM REDIRECIONAMENTOS -->
+    <aside>
+        <a href="newProduct.html" style="text-decoration: none;">
+            <button class="new-product-button" type="button">
+                <span>+</span> Novo Produto
+            </button>
+        </a>
+
+        <nav>
+            <a href="myProducts.html" class="menu-button active-menu">
+                <span>◈</span> Meus Produtos
+            </a>
+            <a href="orders.html" class="menu-button">
+                <span>⌲</span> Pedidos
+            </a>
+            <a href="accountCrochet.html" class="menu-button">
+                <span>⊚</span> Meu Perfil / Ateliê
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DA TELA MEUS PRODUTOS -->
+    
+<section class="account-content">
+
+    <section class="products-section">
+
+        <section class="products-header">
+            <h2>Meus Produtos</h2>
+            <p>Gerencie seus produtos de crochê</p>
+        </section>
+
+        <section class="products-filters">
+
+            <input
+                type="text"
+                placeholder="Buscar produtos..."
+                id="search-product"
+            >
+
+            <select id="status-filter">
+                <option value="">Todos os status</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+            </select>
+
+            <select id="category-filter">
+                <option value="">Todas categorias</option>
+                <option value="1">Tops</option>
+                <option value="2">Baby</option>
+                <option value="3">Biquínis</option>
+                <option value="4">Saias</option>
+                <option value="5">Casacos</option>
+                <option value="6">Cachecol</option>
+                <option value="7">Amigurumis</option>
+            </select>
+
+            <a href="newProduct.html" class="add-product-link">
+                + Cadastrar Item
+            </a>
+
+        </section>
+
+    </section>
+
+    <section class="products-grid" id="products-grid">
+        <p>Carregando produtos...</p>
+    </section>
+
+</section>

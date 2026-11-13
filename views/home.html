@@ -27,11 +27,19 @@
             ♡
             <span class="notification">3</span>
         </button>
-        <button class="icon-button">
+        <button class="icon-button" id="cart-button" type="button">
             🛒
-            <span class="notification">2</span>
+            <span class="notification" id="cart-count">0</span>
         </button>
-        <button class="icon-button" id="profileIcon">👤</button>
+
+        <button class="profile-button">
+            <img
+                id="header-profile-photo"
+                src="../views/assets/images/default-profile.svg"
+                alt="Foto de perfil"
+            >
+        </button>
+
     </nav>
 </header>
 
@@ -46,7 +54,6 @@
             <label><input type="checkbox"> Acessórios</label>
             <label><input type="checkbox"> Decoração</label>
             <label><input type="checkbox"> Bebê</label>
-            <label><input type="checkbox"> Pet</label>
         </section>
 
         <section class="filter-group">
@@ -111,6 +118,17 @@
 
     </section> 
 </main> 
+
+<section id="cart-panel" hidden>
+    <h2>Meu carrinho</h2>
+
+    <section id="cart-items"></section>
+
+    <p>Total: <strong id="cart-total">R$ 0,00</strong></p>
+
+    <button type="button" id="close-cart">Continuar comprando</button>
+    <button type="button" id="checkout-button">Finalizar pedido</button>
+</section>
 
 <script type="module" src="assets/public/scripts/home.js"></script> 
 </body> 

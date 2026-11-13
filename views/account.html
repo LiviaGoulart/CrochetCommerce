@@ -33,9 +33,6 @@
 
     <section class="profile-header">
 
-        <button class="notification-button">
-            🔔
-        </button>
 
         <section class="profile-text">
 
@@ -46,7 +43,7 @@
         </section>
 
         <button class="profile-button">
-            👤
+            <img id="header-profile-photo" src="assets/images/default-profile.svg" alt="Foto de perfil">
         </button>
 
     </section>
@@ -71,9 +68,6 @@
                 ⌲ Meus Pedidos
             </button>
 
-            <button class="menu-button" id="config">
-                ⚙ Configurações
-            </button>
 
         </nav>
 
@@ -87,18 +81,30 @@
 
             <section class="profile-info">
 
-                <section class="profile-image-area">
+            <section class="profile-image-area">
 
-                    <img 
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop"
-                        alt="Foto de perfil"
-                    >
+                <img
+                    id="profile-photo"
+                    src="assets/images/default-profile.svg"
+                    alt="Foto de perfil"
+                >
 
-                    <button class="camera-button">
-                        📷
-                    </button>
+                <button type="button" class="camera-button" id="camera-button">
+                    📷
+                </button>
 
-                </section>
+                <input
+                    type="file"
+                    id="photo-input"
+                    accept="image/*"
+                    hidden
+                >
+
+            </section>
+
+            <button type="button" id="btn-save-photo" hidden>
+                Salvar foto
+            </button>
 
                 <button class="edit-profile-button">
                     ✎ Editar Perfil
@@ -124,8 +130,8 @@
                             ⌲
                         </span>
 
-                        <h3>
-                            1
+                        <h3 id="orders-count">
+                            0
                         </h3>
 
                         <p>
@@ -194,34 +200,13 @@
 
 
                 <!--pedidios do user-->
+                
                 <section class="orders-content">
-
-                    <article class="order-card">
-
-                        <img 
-                            src="https://anamariacraft.com.br/wp-content/uploads/2024/12/294.jpg"
-                            alt="Pedido"
-                        >
-
-                        <section>
-
-                            <h3>
-                                Amigurumi Urso Ted
-                            </h3>
-
-                            <p>
-                                Pedido realizado em 20/05/2026
-                            </p>
-
-                        </section>
-
-                        <span class="order-price">
-                            R$ 89,90
-                        </span>
-
-                    </article>
-
+                    <section class="customer-orders-list" id="orders-list">
+                        <p>Carregando seus pedidos...</p>
+                    </section>
                 </section>
+
 
                 <!--favoritados da conta-->
                 <section class="favorites-content active-content">

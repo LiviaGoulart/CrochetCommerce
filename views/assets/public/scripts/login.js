@@ -59,8 +59,12 @@ class Login {
 
         localStorage.setItem("user", JSON.stringify(result.data));
 
+        console.log("Dados recebidos do login:", result.data);
+        console.log("Token recebido:", result.data.token);
+
+
         if (Number(result.data.typeId) === 2) {
-            window.location.href = "dashboard.html";
+            window.location.href = "accountCrochet.html";
         }
          else if (Number(result.data.typeId) === 1) {
             window.location.href = "home.html";

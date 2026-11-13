@@ -1,0 +1,276 @@
+/* ==========================================
+   ESTILOS COMPACTOS DA TELA MEUS PRODUTOS
+   ========================================== */
+
+/* Cabeçalho de Filtros e Busca */
+.products-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background-color: white;
+    border: 1px solid #efbfd1;
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 8px rgba(239, 191, 209, 0.12);
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.search-box input,
+.search-box select {
+    margin-bottom: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+    height: 38px;
+}
+
+.search-box select {
+    width: auto;
+}
+
+/* Grade de Produtos - Largura mínima reduzida para 180px */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+/* Cards Individuais Menores */
+.product-card {
+    background-color: white;
+    border: 1px solid #efbfd1;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(239, 191, 209, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 130, 171, 0.2);
+}
+
+/* Altura da Imagem Reduzida (130px em vez de 210px) */
+.product-image-area {
+    position: relative;
+    width: 100%;
+    height: 130px;
+    background-color: #fff9fb;
+    border-bottom: 1px solid #f6dce6;
+}
+
+.product-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #d8f5df;
+    color: #00a63e;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.product-badge.out-of-stock {
+    background-color: #fff0f0;
+    color: #d93838;
+}
+
+/* Informações do Produto mais Compactas */
+.product-details {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-category {
+    font-size: 10px;
+    color: #ef82ab;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.product-title {
+    font-size: 14px;
+    color: #4a2f43;
+    font-weight: bold;
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4a2f43;
+    margin-bottom: 4px;
+}
+
+.product-stock {
+    font-size: 11px;
+    color: #7b6475;
+    margin-bottom: 12px;
+}
+
+/* Botões de Ação Menores */
+.product-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #f6dce6;
+}
+
+.btn-product-edit {
+    flex: 1;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid #efbfd1;
+    background-color: white;
+    color: #ef82ab;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.btn-product-edit:hover {
+    background-color: #fff5f8;
+}
+
+.btn-product-delete {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid #f2b3b3;
+    background-color: #fff0f0;
+    color: #d93838;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .products-filter-header {
+        flex-direction: column;
+    }
+    
+    .search-box {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .search-box select {
+        width: 100%;
+    }
+}
+
+.product-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.account-content {
+    width: 100%;
+    padding: 32px;
+}
+
+/* CAIXINHA IGUAL À DO DASHBOARD */
+.products-section {
+    border: 1px solid #efbfd1;
+    border-radius: 20px;
+    background-color: white;
+    overflow: hidden;
+}
+
+/* TÍTULO E DESCRIÇÃO */
+.products-header {
+    padding: 24px;
+    border-bottom: 1px solid #efbfd1;
+}
+
+.products-header h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #4a2f43;
+}
+
+.products-header p {
+    color: #7b6475;
+}
+
+/* PESQUISAS NA MESMA LINHA */
+.products-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #efbfd1;
+}
+
+#search-product {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    border: 1px solid #efbfd1;
+    border-radius: 14px;
+    padding: 0 16px;
+    outline: none;
+}
+
+.products-filters select {
+    flex: 0 0 180px;
+    width: 180px;
+    height: 42px;
+    border: 1px solid #efbfd1;
+    border-radius: 14px;
+    padding: 10px;
+    color: #4a2f43;
+    background-color: white;
+}
+
+.add-product-link {
+    flex: 0 0 auto;
+    height: 42px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 12px;
+    background: linear-gradient(to right, #d67da3, #ef82ab);
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* PRODUTOS */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}

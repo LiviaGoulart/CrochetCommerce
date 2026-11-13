@@ -1,95 +1,110 @@
 
 export default class Products {
-    #id;
-    #usersId;
-    #categoryId;
-    #name;
-    #price;
-    #active;
-
-    constructor({
-        id = null,
-        usersId = null,
-        categoryId = null,
-        name = "",
-        price = 0,
-        active = 1
-    } = {}) {
+    constructor(id, categoryId, name, price, stock, material, status, photo, storeName, usersId) {
         this.id = id;
-        this.usersId = usersId;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
-        this.active = active;
+        this.stock = stock;
+        this.material = material;
+        this.status = status;
+        this.photo = photo;
+        this.storeName = storeName;
+        this.usersId = usersId;
     }
 
-    get id() { return this.#id; }
-    set id(value) {
-        this.#id = value == null ? null : Number(value);
-        if (this.#id !== null && !Number.isInteger(this.#id)) {
-            throw new TypeError("ID inválido");
-        }
+    getId() {
+        return this.id;
     }
 
-    get usersId() { return this.#usersId; }
-    set usersId(value) {
-        this.#usersId = value == null ? null : Number(value);
+    getCategoryId() {
+        return this.categoryId;
     }
 
-    get categoryId() { return this.#categoryId; }
-    set categoryId(value) {
-        const number = Number(value);
-        if (!Number.isInteger(number) || number <= 0) {
-            throw new RangeError("Categoria inválida");
-        }
-        this.#categoryId = number;
+    getName() {
+        return this.name;
     }
 
-    get name() { return this.#name; }
-    set name(value) {
-        if (typeof value !== "string" || !value.trim()) {
-            throw new TypeError("O nome é obrigatório");
-        }
-        this.#name = value.trim();
+    getPrice() {
+        return this.price;
     }
 
-    get price() { return this.#price; }
-    set price(value) {
-        const number = Number(value);
-        if (!Number.isFinite(number) || number < 0) {
-            throw new RangeError("Preço inválido");
-        }
-        this.#price = number;
+    getStock() {
+        return this.stock;
     }
 
-    get active() { return this.#active; }
-    set active(value) {
-        if (![0, 1, "0", "1", true, false].includes(value)) {
-            throw new TypeError("Estado do produto inválido");
-        }
-        this.#active = value === true || value === "1" ? 1
-            : value === false || value === "0" ? 0 : value;
+    getMaterial() {
+        return this.material;
     }
 
-    toJSON() {
-        return {
-            id: this.id,
-            usersId: this.usersId,
-            categoryId: this.categoryId,
-            name: this.name,
-            price: this.price,
-            active: this.active
-        };
+    getStatus() {
+        return this.status;
+    }
+
+    getPhoto() {
+        return this.photo;
+    }
+
+    getStoreName() {
+        return this.storeName;
+    }
+
+    getUsersId() {
+        return this.usersId;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    setCategoryId(categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    setName(name) {
+        this.name = name;
+    }
+
+    setPrice(price) {
+        this.price = price;
+    }
+
+    setStock(stock) {
+        this.stock = stock;
+    }
+
+    setMaterial(material) {
+        this.material = material;
+    }
+
+    setStatus(status) {
+        this.status = status;
+    }
+
+    setPhoto(photo) {
+        this.photo = photo;
+    }
+
+    setStoreName(storeName) {
+        this.storeName = storeName;
+    }
+
+    setUsersId(usersId) {
+        this.usersId = usersId;
     }
 
     static fromAPI(data) {
-        return new Products({
-            id: data.id,
-            usersId: data.usersId ?? data.users_id,
-            categoryId: data.categoryId ?? data.category_id,
-            name: data.name,
-            price: data.price,
-            active: data.active
-        });
+        return new Products(
+            data.id,
+            data.categoryId ?? data.category_id,
+            data.name,
+            data.price,
+            data.stock,
+            data.material ?? data.bio,
+            data.status ?? data.active,
+            data.photo,
+            data.storeName,
+            data.usersId ?? data.users_id
+        );
     }
 }

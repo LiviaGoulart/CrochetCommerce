@@ -1,178 +1,316 @@
 
-    // Armazenamento das Imagens Selecionadas
-    let uploadedImages = [];
+import ProductService from "../../_common/classes/ProductService.js";
 
-    // Alternar visibilidade do prazo sob encomenda
-    function toggleCustomDays() {
-        const checkbox = document.getElementById('prod-custom');
-        const customDaysGroup = document.getElementById('custom-days-group');
-        if (checkbox.checked) {
-            customDaysGroup.style.display = 'flex';
-        } else {
-            customDaysGroup.style.display = 'none';
-        }
-        updateLivePreview();
+const productService = new ProductService();
+
+const fileInput = document.querySelector("#file-input");
+const dropzone = document.querySelector("#dropzone");
+const productForm = document.querySelector("#product-form");
+
+let uploadedImages = [];
+
+// Alternar visibilidade do prazo sob encomenda
+function toggleCustomDays() {
+    const checkbox = document.getElementById("prod-custom");
+    const customDaysGroup = document.getElementById("custom-days-group");
+
+    if (checkbox.checked) {
+        customDaysGroup.style.display = "flex";
+    } else {
+        customDaysGroup.style.display = "none";
     }
 
-    // Atualização Interativa da Pré-Visualização do Card
-    function updateLivePreview() {
-        const name = document.getElementById('prod-name').value;
-        const category = document.getElementById('prod-category').value;
-        const price = parseFloat(document.getElementById('prod-price').value || 0);
-        const oldPrice = parseFloat(document.getElementById('prod-old-price').value || 0);
-        const stock = parseInt(document.getElementById('prod-stock').value || 0);
-        const isCustom = document.getElementById('prod-custom').checked;
-        const leadTime = document.getElementById('prod-lead-time').value || 7;
-        const status = document.getElementById('prod-status').value;
+    updateLivePreview();
+}
 
-        // Atualiza Título
-        document.getElementById('preview-title-display').innerText = name.trim() !== '' ? name : 'Nome do Seu Produto';
-        
-        // Atualiza Categoria
-        document.getElementById('preview-category-display').innerText = category !== '' ? category : 'Categoria Selecionada';
+// Atualização da pré-visualização
+function updateLivePreview() {
+    const name = document.getElementById("prod-name").value;
+    const category = document.getElementById("prod-category").value;
+    const price = parseFloat(document.getElementById("prod-price").value) || 0;
+    const oldPrice = parseFloat(document.getElementById("prod-old-price")?.value) || 0;
+    const stock = parseInt(document.getElementById("prod-stock").value) || 0;
+    const isCustom = document.getElementById("prod-custom").checked;
+    const leadTime = document.getElementById("prod-lead-time").value || 7;
+    const status = document.getElementById("prod-status").value;
 
-        // Atualiza Preço
-        document.getElementById('preview-price-display').innerText = `R$ ${price.toFixed(2).replace('.', ',')}`;
-        
-        // Preço Antigo
-        const oldPriceElem = document.getElementById('preview-old-price-display');
+    // Nome
+    document.getElementById("preview-title-display").textContent =
+        name.trim() !== "" ? name : "Nome do Seu Produto";
+
+    // Categoria
+    const categorySelect = document.getElementById("prod-category");
+    const categoryName = categorySelect.options[categorySelect.selectedIndex]?.text;
+
+    document.getElementById("preview-category-display").textContent =
+        category !== "" ? categoryName : "Categoria Selecionada";
+
+    // Preço
+    document.getElementById("preview-price-display").textContent =
+        `R$ ${price.toFixed(2).replace(".", ",")}`;
+
+    // Preço antigo
+    const oldPriceElem = document.getElementById("preview-old-price-display");
+
+    if (oldPriceElem) {
         if (oldPrice > price && oldPrice > 0) {
-            oldPriceElem.innerText = `R$ ${oldPrice.toFixed(2).replace('.', ',')}`;
+            oldPriceElem.textContent =
+                `R$ ${oldPrice.toFixed(2).replace(".", ",")}`;
         } else {
-            oldPriceElem.innerText = '';
-        }
-
-        // Status / Estoque
-        const stockDisplay = document.getElementById('preview-stock-display');
-        const dot = document.getElementById('preview-dot');
-
-        if (isCustom) {
-            stockDisplay.innerText = `Sob encomenda (${leadTime} dias úteis)`;
-            dot.style.backgroundColor = '#f59e0b'; // Laranja
-        } else if (stock > 0) {
-            stockDisplay.innerText = `${stock} unidade(s) pronta entrega`;
-            dot.style.backgroundColor = '#22c55e'; // Verde
-        } else {
-            stockDisplay.innerText = 'Sem estoque no momento';
-            dot.style.backgroundColor = '#ef4444'; // Vermelho
-        }
-
-        // Badge Status
-        const statusBadge = document.getElementById('preview-status-badge');
-        if (status === 'Ativo') {
-            statusBadge.innerText = '● Ativo';
-            statusBadge.style.color = '#22c55e';
-        } else {
-            statusBadge.innerText = '● Rascunho';
-            statusBadge.style.color = '#6b7280';
+            oldPriceElem.textContent = "";
         }
     }
 
-    // Manipulação do Upload de Arquivos de Imagem
-    function handleFileSelect(event) {
-        const files = Array.from(event.target.files);
-        processFiles(files);
+    // Estoque
+    const stockDisplay = document.getElementById("preview-stock-display");
+    const dot = document.getElementById("preview-dot");
+
+    if (isCustom) {
+        stockDisplay.textContent = `Sob encomenda (${leadTime} dias úteis)`;
+        dot.style.backgroundColor = "#f59e0b";
+    } else if (stock > 0) {
+        stockDisplay.textContent = `${stock} unidade(s) pronta entrega`;
+        dot.style.backgroundColor = "#22c55e";
+    } else {
+        stockDisplay.textContent = "Sem estoque no momento";
+        dot.style.backgroundColor = "#ef4444";
     }
 
-    function processFiles(files) {
-        files.forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedImages.push(e.target.result);
-                    renderPreviews();
-                };
-                reader.readAsDataURL(file);
-            }
+    // Status
+    const statusBadge = document.getElementById("preview-status-badge");
+
+    if (status === "Ativo") {
+        statusBadge.textContent = "● Ativo";
+        statusBadge.style.color = "#22c55e";
+    } else {
+        statusBadge.textContent = "● Rascunho";
+        statusBadge.style.color = "#6b7280";
+    }
+}
+
+// Seleção de arquivos
+function handleFileSelect(event) {
+    const files = Array.from(event.target.files);
+    processFiles(files);
+}
+
+// Processar imagens
+function processFiles(files) {
+    files.forEach(file => {
+        if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                uploadedImages.push(event.target.result);
+                renderPreviews();
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Mostrar pré-visualizações das imagens
+function renderPreviews() {
+    const grid = document.getElementById("previews-grid");
+    const previewContainer = document.getElementById("preview-image-container");
+
+    grid.innerHTML = "";
+
+    if (uploadedImages.length > 0) {
+        previewContainer.innerHTML = `
+            <img src="${uploadedImages[0]}" alt="Foto principal do produto">
+        `;
+
+        uploadedImages.forEach((imgSrc, index) => {
+            const container = document.createElement("div");
+            container.className = "preview-thumb-container";
+
+            const image = document.createElement("img");
+            image.src = imgSrc;
+            image.className = "preview-thumb";
+            image.alt = `Imagem ${index + 1}`;
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "remove-thumb-btn";
+            button.textContent = "✕";
+            button.addEventListener("click", () => removeImage(index));
+
+            container.appendChild(image);
+            container.appendChild(button);
+
+            grid.appendChild(container);
         });
+    } else {
+        previewContainer.innerHTML = `
+            <span style="font-size: 32px; color: #d67da3;">🧶</span>
+            <span style="font-size: 12px; color: #a08899; margin-top: 6px;">
+                Envie uma imagem para visualizar
+            </span>
+        `;
     }
+}
 
-    // Renderizar miniaturas e atualizar capa do card principal
-    function renderPreviews() {
-        const grid = document.getElementById('previews-grid');
-        const previewContainer = document.getElementById('preview-image-container');
+// Remover imagem
+function removeImage(index) {
+    uploadedImages.splice(index, 1);
+    renderPreviews();
+}
 
-        grid.innerHTML = '';
+// Upload de imagens
+if (fileInput) {
+    fileInput.addEventListener("change", handleFileSelect);
+}
 
-        if (uploadedImages.length > 0) {
-            // Imagem Principal na Pré-visualização
-            previewContainer.innerHTML = `<img src="${uploadedImages[0]}" alt="Foto principal do produto">`;
-
-            // Miniaturas
-            uploadedImages.forEach((imgSrc, index) => {
-                const container = document.createElement('div');
-                container.className = 'preview-thumb-container';
-
-                container.innerHTML = `
-                    <img src="${imgSrc}" class="preview-thumb" alt="Thumb ${index}">
-                    <button type="button" class="remove-thumb-btn" onclick="removeImage(${index})">✕</button>
-                `;
-                grid.appendChild(container);
-            });
-        } else {
-            previewContainer.innerHTML = `
-                <span style="font-size: 32px; color: #d67da3;">🧶</span>
-                <span style="font-size: 12px; color: #a08899; margin-top: 6px;">Envie uma imagem para visualizar</span>
-            `;
-        }
-    }
-
-    // Remover foto carregada
-    function removeImage(index) {
-        uploadedImages.splice(index, 1);
-        renderPreviews();
-    }
-
-    // Suporte a Drag and Drop no Dropzone
-    const dropzone = document.getElementById('dropzone');
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            dropzone.classList.add('dragover');
-        }, false);
+// Drag and Drop
+if (dropzone) {
+    ["dragenter", "dragover"].forEach(eventName => {
+        dropzone.addEventListener(eventName, event => {
+            event.preventDefault();
+            dropzone.classList.add("dragover");
+        });
     });
 
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            dropzone.classList.remove('dragover');
-        }, false);
+    ["dragleave", "drop"].forEach(eventName => {
+        dropzone.addEventListener(eventName, event => {
+            event.preventDefault();
+            dropzone.classList.remove("dragover");
+        });
     });
 
-    dropzone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = Array.from(dt.files);
+    dropzone.addEventListener("drop", event => {
+        const files = Array.from(event.dataTransfer.files);
         processFiles(files);
     });
+}
 
-    // Submissão do Formulário
-    function handleProductSubmit(event) {
-        event.preventDefault();
-        showToast('✓ Produto publicado com sucesso no catálogo!');
+// Cadastrar produto
+async function handleProductSubmit(event) {
+    event.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user || !user.token || !user.id) {
+        showToast("Faça login novamente.");
+        return;
     }
 
-    function saveDraft() {
-        document.getElementById('prod-status').value = 'Rascunho';
-        updateLivePreview();
-        showToast('💾 Produto salvo como rascunho!');
+    if (!fileInput.files.length) {
+        showToast("Selecione uma imagem para o produto.");
+        return;
     }
 
-    function resetForm() {
-        document.getElementById('product-form').reset();
-        uploadedImages = [];
-        renderPreviews();
-        toggleCustomDays();
-        updateLivePreview();
-        showToast('Formulário redefinido.');
+    productService.setAuthToken(user.token);
+
+    const formData = new FormData();
+
+    formData.append("categoryId", document.getElementById("prod-category").value);
+    formData.append("name", document.getElementById("prod-name").value.trim());
+    formData.append("price", document.getElementById("prod-price").value);
+
+    formData.append(
+        "active",
+        document.getElementById("prod-status").value === "Ativo" ? 1 : 0
+    );
+
+    formData.append(
+        "bio",
+        document.getElementById("prod-desc").value.trim()
+    );
+
+    formData.append("stock", document.getElementById("prod-stock").value);
+    formData.append("photo", fileInput.files[0]);
+
+    console.log("Dados enviados:", Object.fromEntries(formData));
+
+    try {
+        const response = await productService.post("/products/", formData);
+
+        console.log("Resposta do cadastro:", response);
+
+        if (response.status !== "success") {
+            showToast(response.message || "Não foi possível cadastrar o produto.");
+            return;
+        }
+
+        showToast("Produto cadastrado com sucesso!");
+        resetForm();
+
+    } catch (error) {
+        console.error("Erro ao cadastrar produto:", error);
+        showToast("Erro ao cadastrar. Confira o Console (F12).");
+    }
+}
+
+// Salvar como rascunho
+function saveDraft() {
+    document.getElementById("prod-status").value = "Rascunho";
+    updateLivePreview();
+    showToast("💾 Produto salvo como rascunho!");
+}
+
+// Limpar formulário
+function resetForm() {
+    document.getElementById("product-form").reset();
+
+    uploadedImages = [];
+
+    renderPreviews();
+    toggleCustomDays();
+    updateLivePreview();
+
+    showToast("Formulário redefinido.");
+}
+
+// Evento do formulário
+if (productForm) {
+    productForm.addEventListener("submit", handleProductSubmit);
+}
+
+// Toast
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    const toastMessage = document.getElementById("toast-message");
+
+    toastMessage.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3500);
+}
+
+// Dados da crocheteira logada
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (user) {
+    const artisanName = document.querySelector(".artisan-name");
+    const storeName = document.querySelector(".store-name");
+
+    if (artisanName) {
+        artisanName.textContent = user.artName || user.name || "";
     }
 
-    // Notificação Toast Interativa
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toast-message').innerText = message;
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3500);
+    if (storeName) {
+        storeName.textContent = user.storeName || "";
     }
+}
+
+// Foto de perfil
+const headerPhoto = document.getElementById("header-profile-photo");
+
+if (headerPhoto) {
+    headerPhoto.src = user && user.photo
+        ? user.photo
+        : "assets/images/default-profile.svg";
+}
+
+// Disponibilizar funções usadas pelo HTML
+window.updateLivePreview = updateLivePreview;
+window.toggleCustomDays = toggleCustomDays;
+window.saveDraft = saveDraft;
+window.resetForm = resetForm;
+
+// Atualizar pré-visualização inicial
+updateLivePreview();

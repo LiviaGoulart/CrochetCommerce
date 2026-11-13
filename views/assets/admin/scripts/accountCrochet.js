@@ -63,12 +63,6 @@
     const user = JSON.parse(localStorage.getItem("user"));
     const users = new Users();
 
-        const dasshboard = document.querySelector("#dashboard");
-    dashboard.addEventListener("click", () => {
-        console.log("clicoy");
-        window.location.href = "dashboard.html";
-    })
-
         const newProduct = document.querySelector(".new-product-button");
     newProduct.addEventListener("click", () => {
         window.location.href = "newProduct.html";
@@ -81,6 +75,12 @@ if (user) {
 
     document.querySelector("#atelie-form .artisan-name").value =
     user.artName || user.name || "";
+
+    document.querySelector("#atelie-form .store-name").value =
+    user.storeName || "";
+
+    document.querySelector("#store-name-display").textContent =
+    user.storeName || "";
 
     document.querySelector("header .store-name").textContent =
     user.storeName || "";
@@ -206,3 +206,103 @@ deleteButton.addEventListener("click", async () => {
         alert(response.message || "Não foi possível excluir sua conta.");
     }
 });
+
+
+// FOTO PERFIL CROCHETEIRA
+const profilePhotoInput = document.getElementById("photo-input");
+const profilePhotoPreview = document.getElementById("profile-preview");
+const profilePhotoForm = document.getElementById("form-upload-photo");
+const savePhotoButton = document.getElementById("btn-save-photo");
+
+const headerPhoto = document.getElementById("header-profile-photo");
+
+if (headerPhoto) {
+    headerPhoto.src = user && user.photo
+        ? user.photo
+        : "assets/images/default-profile.svg";
+}
+
+// Mostrar foto já cadastrada
+if (user && user.photo && profilePhotoPreview) {
+    profilePhotoPreview.src = user.photo;
+}
+
+// Pré-visualizar imagem selecionada
+if (profilePhotoInput) {
+    profilePhotoInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("Selecione um arquivo de imagem.");
+            profilePhotoInput.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            profilePhotoPreview.src = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+
+        savePhotoButton.style.display = "block";
+    });
+}
+
+// Salvar foto no servidor
+if (profilePhotoForm) {
+    profilePhotoForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const file = profilePhotoInput.files[0];
+
+        if (!file) {
+            alert("Selecione uma foto primeiro.");
+            return;
+        }
+
+        if (!user || !user.token) {
+            alert("Faça login novamente.");
+            return;
+        }
+
+        users.setAuthToken(user.token);
+
+try {
+    const response = await users.uploadPhoto(file);
+
+    console.log("Resposta do upload:", response);
+
+    if (response.code === 200) {
+        const photo = response.data.photo;
+
+        user.photo = photo;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Atualizar foto principal
+        profilePhotoPreview.src = photo;
+
+        // Atualizar foto do canto superior direito
+        const headerPhoto = document.getElementById("header-profile-photo");
+
+        if (headerPhoto) {
+            headerPhoto.src = photo;
+        }
+
+        savePhotoButton.style.display = "none";
+        profilePhotoInput.value = "";
+
+        alert("Foto de perfil atualizada com sucesso!");
+    } else {
+        alert(response.message || "Erro ao salvar a foto.");
+    }
+
+} catch (error) {
+    console.error("Erro ao enviar foto:", error);
+    alert("Falha ao comunicar com o servidor.");
+}
+    });
+}

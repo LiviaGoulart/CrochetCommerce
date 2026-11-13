@@ -1,47 +1,41 @@
-class Cart{
-    constructor() {
-        this.id = this.id;
-        this.products = this.products;
-        this.total = this.total;
-        this.cliente = this.cliente;
 
-        this.init();
+export default class Cart {
+    constructor(id = null, products = [], total = 0, cliente = null) {
+        this.id = id;
+        this.products = products;
+        this.total = total;
+        this.cliente = cliente;
     }
 
-    init() {
-        // this.selectType();
-        // this.login();
-        // this.submit();
-
-        //colocar os métodos depois
-    }
-
-
-    getId(){
+    getId() {
         return this.id;
     }
-    setId(id){
+
+    setId(id) {
         this.id = id;
     }
 
-    getProducts(){
+    getProducts() {
         return this.products;
     }
-    setProducts(products){
+
+    setProducts(products) {
         this.products = products;
     }
 
-    getTotal(){
+    getTotal() {
         return this.total;
     }
-    setTotal(total){
+
+    setTotal(total) {
         this.total = total;
     }
 
-    getCliente(){
+    getCliente() {
         return this.cliente;
     }
-    setCliente(cliente){
+
+    setCliente(cliente) {
         this.cliente = cliente;
     }
 }

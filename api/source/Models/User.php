@@ -7,6 +7,7 @@ use Source\Core\Model;
 use Source\Core\Connect;
 use Source\Core\JWTToken;
 
+
 class User extends Model
 {
     private ?int $id;
@@ -24,10 +25,11 @@ class User extends Model
     private ?string $cpf;
     private ?string $phone;
     private ?string $instagram;
+    private ?string $photo;
 
     private ?string $token = null;
 
-    public function __construct(?int $id = null, ?int $typeId = null, ?string $name = null, ?string $email = null, ?string $password = null, ?string $bio = null, ?string $address = null, ?int $active = null, ?string $storeName = null, ?string $artName = null, ?string $cpf = null, ?string $phone = null, ?string $instagram = null)
+    public function __construct(?int $id = null, ?int $typeId = null, ?string $name = null, ?string $email = null, ?string $password = null, ?string $bio = null, ?string $address = null, ?int $active = null, ?string $storeName = null, ?string $artName = null, ?string $cpf = null, ?string $phone = null, ?string $instagram = null, ?string $photo = null)
     {
         $this->id = $id;
         $this->typeId = $typeId;
@@ -43,10 +45,11 @@ class User extends Model
         $this->cpf = $cpf;
         $this->phone = $phone;
         $this->instagram = $instagram;
+        $this->photo = $photo;
 
         $this->table = 'users'; // nome da tabela do banco
         $this->primaryKey = 'id'; // nome da chave primária da tabela
-        $this->fillable = ['typeId', 'name', 'email', 'password', 'bio', 'address', 'active', 'storeName', 'artName', 'cpf', 'phone', 'instagram']; // camelCase
+        $this->fillable = ['typeId', 'name', 'email', 'password', 'bio', 'address', 'active', 'storeName', 'artName', 'cpf', 'phone', 'instagram', 'photo']; // camelCase
         
     }
 
@@ -113,6 +116,17 @@ class User extends Model
         $this->address = $address;
     }
 
+    public function getActive(): ?int
+{
+    return $this->active;
+}
+
+public function setActive($active): User
+{
+    $this->active = ($active === null) ? null : (int) $active;
+    return $this;
+}
+
     public function getStoreName(): ?string
     {
         return $this->storeName;
@@ -158,7 +172,16 @@ class User extends Model
         $this->instagram = $instagram;
     }
 
-    
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+    public function setPhoto(?string $photo): void
+    {
+        $this->photo = $photo;
+    }
+
+
     public function getToken(): ?string
     {
         return $this->token;
@@ -208,6 +231,11 @@ class User extends Model
 
     $user = $stmt->fetch();
 
+    if (isset($user->active) && (int) $user->active === 0) {
+    $this->errorMessage = "Esta conta está desativada.";
+    return false;
+}
+
     if (!password_verify($password, $user->password)) {
         $this->errorMessage = "Senha incorreta";
         return false;
@@ -249,5 +277,80 @@ class User extends Model
         }
         return true;
     }
+
+    public function updatePhoto(int $userId, string $photo): bool
+    {
+        $query = "UPDATE {$this->table} SET photo = :photo WHERE id = :id";
+
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindValue(":photo", $photo);
+        $stmt->bindValue(":id", $userId, PDO::PARAM_INT);
+
+        if (!$stmt->execute()) {
+            $this->errorMessage = "Não foi possível atualizar a foto.";
+            return false;
+        }
+
+        $this->photo = $photo;
+
+        return true;
+    }
+
+    private function deletePreviousPhoto(?string $oldPhoto, string $uploadDirectory): void
+    {
+        if (empty($oldPhoto)) {
+            return;
+        }
+
+        $oldFilename = basename($oldPhoto);
+        $oldPath = $uploadDirectory . DIRECTORY_SEPARATOR . $oldFilename;
+
+        if (is_file($oldPath)) {
+            unlink($oldPath);
+        }
+    }
+
+
+public function deleteById(int $userId): bool
+{
+    try {
+        $db = Connect::getInstance();
+
+        $db->beginTransaction();
+
+        // Desativar os produtos da crocheteira
+        $stmt = $db->prepare(
+            "UPDATE products SET active = 0 WHERE users_id = :id"
+        );
+
+        $stmt->execute([":id" => $userId]);
+
+        // Desativar a conta
+        $stmt = $db->prepare(
+            "UPDATE users SET active = 0 WHERE id = :id AND type_id = 2"
+        );
+
+        $stmt->execute([":id" => $userId]);
+
+        if ($stmt->rowCount() === 0) {
+            $db->rollBack();
+            $this->errorMessage = "Conta não encontrada ou já desativada.";
+            return false;
+        }
+
+        $db->commit();
+
+        return true;
+
+    } catch (\Throwable $e) {
+        if (isset($db) && $db->inTransaction()) {
+            $db->rollBack();
+        }
+
+        $this->errorMessage = $e->getMessage();
+        return false;
+    }
+}
+
 
 }

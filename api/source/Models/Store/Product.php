@@ -1,6 +1,5 @@
 <?php
-
-namespace Source\Models\Store;
+namespace Source\Models;
 
 use Source\Core\Model;
 use Source\Core\Connect;
@@ -13,10 +12,12 @@ class Product extends Model
     private ?string $name;
     private ?float $price;
     private ?int $active;
-
+    private ?string $bio;
+    private ?int $stock;
+    private ?string $photo;
    
 
-    public function __construct(?int $id = null, ?int $usersId = null, ?int $categoryId = null, ?string $name = null, ?float $price = null, ?int $active = 1)
+    public function __construct(?int $id = null, ?int $usersId = null, ?int $categoryId = null, ?string $name = null, ?float $price = null, ?int $active = 1, ?string $bio = null, ?int $stock = null, ?string $photo = null)
     {
         $this->id = $id;
         $this->usersId = $usersId;
@@ -24,10 +25,13 @@ class Product extends Model
         $this->name = $name;
         $this->price = $price;
         $this->active = $active;
+        $this->bio = $bio;
+        $this->stock = $stock;
+        $this->photo = $photo;
 
         $this->table = 'products'; // nome da tabela do banco
         $this->primaryKey = 'id'; // nome da chave primária da tabela
-        $this->fillable = ['usersId', 'categoryId', 'name', 'price', 'active']; // camelCase
+        $this->fillable = ['usersId', 'categoryId', 'name', 'price', 'active', 'bio', 'stock', 'photo']; // camelCase
     }
 
     public function getId(): ?int

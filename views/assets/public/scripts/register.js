@@ -76,7 +76,7 @@ class Register {
                     console.log("TIPO ANTES DO CADASTRO:", this.selectedType);
 
                     if (this.selectedType === "seller") {
-                        window.location.href = "dashboard.html";
+                        window.location.href = "accountCrochet.html";
                     } else if (this.selectedType === "client") {
                         window.location.href = "home.html";
                     }

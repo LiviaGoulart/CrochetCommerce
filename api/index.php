@@ -39,6 +39,7 @@ $route->group("/products");
 
 $route->get("/list/{product_id}", "Products:listById");
 $route->get("/list", "Products:listAll");
+$route->get("/store", "Products:listStore");
 $route->post("/", "Products:insert");
 $route->put("/{product_id}", "Products:update");
 $route->delete("/{product_id}", "Products:delete");
@@ -46,6 +47,13 @@ $route->delete("/{product_id}", "Products:delete");
 $route->group(null);
 
 
+
+$route->group("/orders");
+$route->post("/create", "Orders:create");
+$route->get("/list", "Orders:list");
+$route->put("/status/{id}", "Orders:updateStatus");
+$route->get("/client", "Orders:listClient");
+$route->group(null);
 
 
 $route->group("/products-categories");
@@ -87,11 +95,14 @@ $route->post("/register", "Users:registerCrochet");
 $route->post("/login", "Users:loginGeral");
 $route->put("/update", "Users:updateCrochet");
 $route->delete("/delete", "Users:deleteCrochet");
+$route->post("/photo","Users:uploadPhoto"); // upload de foto da crocheteira
 
 $route->post("/register-client", "Users:registerCliente");
 $route->post("/login-client", "Users:auth");
 $route->put("/update-client", "Users:updateClient");
 $route->delete("/delete-client", "Users:deleteClient");
+$route->post("/photo-client", "Users:uploadPhotoClient");
+
 
 //$route->group(null);
 

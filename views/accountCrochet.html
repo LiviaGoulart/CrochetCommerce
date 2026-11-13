@@ -20,40 +20,39 @@
     </section>
 
     <section class="profile-area">
-        <button class="notification-button" title="Notificações">🔔</button>
         <section class="profile-info">
-            <h2 class="artisan-name"></h2>
+            <h2 class="artisan-name">Maria Silva</h2>
             <p class="store-name">Ateliê Mãos de Fada</p>
         </section>
-        <button class="profile-button" title="Perfil do Usuário">👤</button>
+
+        <button class="profile-button" title="Perfil do Usuário">
+    <img id="header-profile-photo"
+         src="assets/images/default-profile.svg"
+         alt="Foto de perfil">
+</button>
+
     </section>
 </header>
 
 <main>
     <!-- BARRA LATERAL / NAVEGAÇÃO -->
     <aside>
-        <button class="new-product-button">
-            <span>+</span> Novo Produto
-        </button>
+        <a href="newProduct.html">
+            <button class="new-product-button">
+                <span>+</span> Novo Produto
+            </button>
+        </a>
 
         <nav>
-            <a href="#" class="menu-button" id="dashboard">
-                <span>◫</span> Dashboard
-            </a>
-            <a href="#" class="menu-button">
+            
+            <a href="myProducts.html" class="menu-button">
                 <span>◈</span> Meus Produtos
             </a>
-            <a href="#" class="menu-button">
+            <a href="orders.html" class="menu-button">
                 <span>⌲</span> Pedidos
             </a>
-            <a href="#" class="menu-button">
-                <span>📊</span> Análises
-            </a>
-            <a href="#" class="menu-button active-menu">
+            <a href="account.html" class="menu-button active-menu">
                 <span>⊚</span> Meu Perfil / Ateliê
-            </a>
-            <a href="#" class="menu-button">
-                <span>⚙</span> Configurações
             </a>
         </nav>
     </aside>
@@ -66,14 +65,21 @@
             <section class="profile-banner"></section>
 
             <section class="profile-info-card">
-                <section class="profile-image-area">
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" alt="Foto de perfil da Crocheteira">
-                    <button class="camera-button" title="Alterar foto de perfil">📷</button>
-                </section>
-
-                <!-- <button class="edit-profile-button" onclick="switchTab('tab-atelie')">
-                    ✎ Editar Ateliê
-                </button> -->
+                
+                <!-- UPLOAD DA FOTO DE PERFIL DA CROCHETEIRA -->
+                <form id="form-upload-photo" action="/photo" method="POST" enctype="multipart/form-data" class="profile-photo-form">
+                    <section class="profile-image-area">
+                        <img id="profile-preview" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" alt="Foto de perfil da Crocheteira">
+                        
+                        <input type="file" id="photo-input" name="photo" accept="image/png, image/jpeg, image/jpg" hidden>
+                        <label for="photo-input" class="camera-button" title="Alterar foto de perfil">📷</label>
+                    </section>
+                    
+                    <!-- BOTÃO SALVAR (POSICIONADO AO LADO DA FOTO) -->
+                    <button type="submit" id="btn-save-photo" class="save-photo-btn">
+                        Salvar Nova Foto
+                    </button>
+                </form>
 
                 <header class="store-header-title">
                     <h2 id="store-name-display">Ateliê Mãos de Fada</h2>
@@ -88,32 +94,7 @@
                     📍 São Paulo, SP • Atendimento Nacional
                 </p>
 
-                <!-- ESTATÍSTICAS RÁPIDAS DA VENDEDORA -->
-                <section class="stats-area">
-                    <article class="stat-card">
-                        <span class="stat-icon">$</span>
-                        <h3>R$ 12.450</h3>
-                        <p>Receita Total</p>
-                    </article>
 
-                    <article class="stat-card">
-                        <span class="stat-icon">⌲</span>
-                        <h3>152</h3>
-                        <p>Vendas Realizadas</p>
-                    </article>
-
-                    <article class="stat-card">
-                        <span class="stat-icon">◈</span>
-                        <h3>24</h3>
-                        <p>Produtos Ativos</p>
-                    </article>
-
-                    <article class="stat-card">
-                        <span class="stat-icon">☆</span>
-                        <h3>4.9</h3>
-                        <p>Avaliação da Loja</p>
-                    </article>
-                </section>
             </section>
         </section>
 
@@ -193,7 +174,7 @@
 
                 <!-- ABA 2: DADOS BANCÁRIOS -->
                 <section id="tab-banco" class="tab-pane">
-                    <form id="bank-form" onsubmit="handleFormSubmit(event)">
+                    <form id="bank-form">
                         <h3 class="section-subtitle">Conta para Recebimento de Vendas</h3>
 
                         <section class="form-grid">
@@ -242,7 +223,7 @@
 
                 <!-- ABA 3: CONFIGURAÇÕES DE ENVIO -->
                 <section id="tab-envio" class="tab-pane">
-                    <form id="shipping-form" onsubmit="handleFormSubmit(event)">
+                    <form id="shipping-form">
                         <h3 class="section-subtitle">Origem de Postagem e Políticas de Entrega</h3>
 
                         <section class="form-grid">
@@ -290,44 +271,8 @@
                                 </section>
                                 <span class="review-stars">★★★★★</span>
                             </header>
-                            <p class="review-comment">
-                                "O amigurumi do urso Ted é impecável! Veio super cheiroso, muito bem embalado e a entrega foi mais rápida do que o combinado. Parabéns pelo trabalho lindo!"
-                            </p>
-                            <span class="review-product-tag">Amigurumi Urso Ted</span>
-                        </article>
-
-                        <article class="review-card">
-                            <header class="review-header">
-                                <section class="review-user">
-                                    <span class="review-avatar">JL</span>
-                                    <section class="review-user-info">
-                                        <h4>Juliana Lima</h4>
-                                        <p>Avaliado em 28/09/2026</p>
-                                    </section>
-                                </section>
-                                <span class="review-stars">★★★★★</span>
-                            </header>
-                            <p class="review-comment">
-                                "Comprei a bolsa de crochê e superou todas as minhas expectativas! Acabamento perfeito e alça super reforçada."
-                            </p>
-                            <span class="review-product-tag">Bolsa Praia Boho</span>
-                        </article>
-
-                        <article class="review-card">
-                            <header class="review-header">
-                                <section class="review-user">
-                                    <span class="review-avatar">RA</span>
-                                    <section class="review-user-info">
-                                        <h4>Renata Almeida</h4>
-                                        <p>Avaliado em 15/09/2026</p>
-                                    </section>
-                                </section>
-                                <span class="review-stars">★★★★☆</span>
-                            </header>
-                            <p class="review-comment">
-                                "O kit de coelhinhos é uma graça! Apenas o prazo dos Correios atrasou um pouquinho, mas o atendimento da crocheteira foi impecável."
-                            </p>
-                            <span class="review-product-tag">Kit Coelhinhos Decorativos</span>
+                            <p class="review-comment">Amei o amigurumi! Veio extremamente bem embalado e superou minhas expectativas. Ponto impecável!</p>
+                            <span class="review-product-tag">Amigurumi Ursinho Baby</span>
                         </article>
                     </section>
                 </section>
@@ -338,5 +283,17 @@
     </section>
 </main>
 
+<script>
+    function openTab(evt, tabId) {
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        tabPanes.forEach(pane => pane.classList.remove('active-pane'));
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+
+        document.getElementById(tabId).classList.add('active-pane');
+        evt.currentTarget.classList.add('active-tab');
+    }
+</script>
 </body>
 </html>

@@ -3,7 +3,8 @@
 namespace source\Controller;
 
 use Source\Controller\Api;
-use Source\Models\Store\Product;
+use Source\Models\Product;
+use Source\Support\Upload;
 
 class Products extends Api
 {
@@ -52,13 +53,25 @@ class Products extends Api
 
     }
 
-    public function listAll (array $data): void
+    
+    public function listAll(array $data): void
     {
+        if (!$this->authToken(2)) {
+            $this->call(
+                401,
+                "unauthorized",
+                "Token de autenticação inválido ou expirado.",
+                "error"
+            )->back(null);
+            return;
+        }
+
         $products = new Product();
 
-        $this->call(200,"success","Lista de Produtos","success")
-            ->back($products->selectAll());
+        $this->call(200, "success", "Lista de Produtos", "success")
+            ->back($products->selectByUserId($this->userAuthId));
     }
+
 
     public function listPaginator (array $data): void
     {
@@ -80,138 +93,170 @@ class Products extends Api
         $this->call(200,"success","Lista de Produtos com Paginação","success")->back($response);
     }
 
+    //lista da cliente
+    public function listStore(array $data): void
+    {
+        $products = new Product();
+
+        $this->call(200, "success", "Lista de Produtos da Loja", "success")
+            ->back($products->selectStore());
+    }
+
+
     //INSERT - POST
-    public function insert (array $data): void
-    {
-
-        
-        if(!$this->authToken(2)){
-            $this->call(
-                401,
-                "unauthorized",
-                "Token de autenticação inválido ou expirado.",
-                "error"
-            )->back();
-            exit;
-        } //var_dump($data);
-        
-
-        $product = new Product(
-            null,
-            $data["usersId"] ?? null,
-            $data["categoryId"] ?? null,
-            $data["name"] ?? null,
-            $data["price"] ?? null,
-            null
-        );
-
-
-        if(!$product->insert()){
-            $this->call(
-                500,
-                "internal_service_error",
-                $product->getErrorMessage(),
-                "error"
-            )->back();
-            return;
-        }
-
-        $response = [
-            "usersId" => $product->getUsersId(),
-            "categoryId" => $product->getCategoryId(),
-            "name" => $product->getName(),
-            "price" => $product->getPrice(),
-            "active" => 1
-        ];
-
+    public function insert(array $data): void
+{
+    if (!$this->authToken(2)) {
         $this->call(
-            201,
-            "success",
-            "Produto cadastrado com sucesso!",
-            "success"
-        )->back($response);
+            401,
+            "unauthorized",
+            "Token de autenticação inválido ou expirado.",
+            "error"
+        )->back();
         return;
-
-
-
-        // if(!$this->validate($data)){
-        //     $this->call(
-        //         400,
-        //         "bad_request",
-        //         "Os campos category_id, name e price são obrigatórios",
-        //         "error"
-        //     )->back();
-        //     return;
-        // }
-
-        // $product = new Product(
-        //     null,
-        //     $data["category_id"],
-        //     $data["name"],
-        //     $data["price"]
-        // );
-
-        // if(!$product->insert()){
-        //     $this->call(500, "internal_server_error", $product->getErrorMessage(), "error")->back();
-        //     return;
-        // }
-        // $response = [
-        //     "id" => $product->getId(),
-        //     "category_id" => $product->getCategoryId(),
-        //     "name" => $product->getName(),
-        //     "price" => $product->getPrice(),
-        //     "active" => $product->getActive()
-        // ];
-
-        // $this->call(201,"success","Produto inserido com sucesso","success")->back($response);
-
     }
 
-    public function update (array $data): void
-    {
-        if(!filter_var($data["product_id"], FILTER_VALIDATE_INT)) {
-            $this->call(
-                400,
-                "bad_request",
-                "ID do produto é obrigatório e deve ser um número inteiro",
-                "error"
-            )->back();
-            return;
-        }
+    // Dados enviados pelo formulário
+    $data = $_POST;
 
-        if(!$this->validate($data)){
-            $this->call(
-                400,
-                "bad_request",
-                "Os campos category_id, name e price são obrigatórios",
-                "error"
-            )->back();
-            return;
-        }
-
-        $product = new Product(
-            null,
-            null,
-            $data["category_id"],
-            $data["name"],
-            $data["price"]
-        );
-
-        
-        if(!$product->updateById($data["product_id"])){
-            $this->call(500, "internal_server_error", $product->getErrorMessage(), "error")->back();
-            return;
-        }
-        $response = [
-            "id" => $product->getId(),
-            "category_id" => $product->getCategoryId(),
-            "name" => $product->getName(),
-            "price" => $product->getPrice(),
-            "active" => $product->getActive()
-        ];
-
-        $this->call(200,"success","Produto atualizado com sucesso","success")->back($response);
+    // Verificar se uma imagem foi enviada
+    if (!isset($_FILES["photo"]) || $_FILES["photo"]["error"] !== UPLOAD_ERR_OK) {
+        $this->call(
+            400,
+            "bad_request",
+            "Selecione uma imagem para o produto.",
+            "error"
+        )->back();
+        return;
     }
+
+    // Pasta onde as imagens serão salvas
+    $uploadDirectory = dirname(__DIR__, 3)
+        . DIRECTORY_SEPARATOR . "uploads"
+        . DIRECTORY_SEPARATOR . "products";
+
+    if (!is_dir($uploadDirectory)) {
+        mkdir($uploadDirectory, 0777, true);
+    }
+
+    // Fazer upload
+    $uploader = new Upload($uploadDirectory);
+    $filename = $uploader->image($_FILES["photo"]);
+
+    if (!$filename) {
+        $this->call(
+            500,
+            "internal_server_error",
+            "Não foi possível enviar a imagem.",
+            "error"
+        )->back();
+        return;
+    }
+
+    $photoPath = "uploads/products/" . $filename;
+
+    // Criar produto
+    $product = new Product(
+        null,
+        $this->userAuthId,
+        $data["categoryId"] ?? null,
+        $data["name"] ?? null,
+        $data["price"] ?? null,
+        $data["active"] ?? 1,
+        $data["bio"] ?? null,
+        $data["stock"] ?? null,
+        $photoPath
+    );
+
+    if (!$product->insert()) {
+        $this->call(
+            500,
+            "internal_service_error",
+            $product->getErrorMessage(),
+            "error"
+        )->back();
+        return;
+    }
+
+    $response = [
+        "usersId" => $product->getUsersId(),
+        "categoryId" => $product->getCategoryId(),
+        "name" => $product->getName(),
+        "price" => $product->getPrice(),
+        "active" => $product->getActive(),
+        "bio" => $product->getBio(),
+        "stock" => $product->getStock(),
+        "photo" => $photoPath
+    ];
+
+    $this->call(
+        201,
+        "success",
+        "Produto cadastrado com sucesso!",
+        "success"
+    )->back($response);
+}
+
+public function update(array $data): void
+{
+    // Receber os dados enviados pelo JavaScript
+    $body = json_decode(file_get_contents("php://input"), true) ?? [];
+
+    // Juntar os dados da rota com os dados do produto
+    $data = array_merge($data, $body);
+
+    if (
+        !isset($data["product_id"]) ||
+        !filter_var($data["product_id"], FILTER_VALIDATE_INT)
+    ) {
+        $this->call(400, "bad_request", "ID inválido", "error")->back();
+        return;
+    }
+
+    if (
+        empty($data["categoryId"]) ||
+        empty($data["name"]) ||
+        !isset($data["price"])
+    ) {
+        $this->call(
+            400,
+            "bad_request",
+            "Dados do produto incompletos",
+            "error"
+        )->back();
+        return;
+    }
+
+    $product = new Product(
+        null,
+        null,
+        (int) $data["categoryId"],
+        $data["name"],
+        (float) $data["price"]
+    );
+
+    if (!$product->updateById((int) $data["product_id"])) {
+        $this->call(
+            500,
+            "internal_server_error",
+            $product->getErrorMessage() ?? "Erro ao atualizar produto",
+            "error"
+        )->back();
+        return;
+    }
+
+    $this->call(
+        200,
+        "success",
+        "Produto atualizado com sucesso",
+        "success"
+    )->back([
+        "id" => (int) $data["product_id"],
+        "categoryId" => $product->getCategoryId(),
+        "name" => $product->getName(),
+        "price" => $product->getPrice()
+    ]);
+}
 
     public function delete (array $data): void
     {
